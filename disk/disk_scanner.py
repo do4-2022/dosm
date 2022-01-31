@@ -2,15 +2,13 @@ from disk import partition
 
 def get_partitions():
     """
-    This function returns a list of partition objects.
+    This function returns a list of partition in the disk.
     """
     partitions = []
     for line in open('/proc/partitions'):
-        if line.startswith('major'):
+        if line.startswith('major') or line.startswith('\n'):
             continue
         fields = line.split()
-        if len(fields) < 3:
-            continue
         partitions.append(partition(
             int(fields[0]),
             int(fields[1]),
