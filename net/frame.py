@@ -10,7 +10,6 @@ from tkinter import ttk
 import psutil
 import math
 
-
 class Tab(DOSMFrame):
     def __init__(self, master, logger, **options):
         super(Tab, self).__init__(master, logger, **options)
@@ -45,6 +44,7 @@ class Tab(DOSMFrame):
 
         self.currentSent = StringVar()
         self.currentRecv = StringVar()
+
 
     def show(self):
         labelselect = ttk.Label(self, justify="center", text="Please select an interface")
