@@ -8,7 +8,6 @@ import psutil
 #   -draw switchband usage and find a library to do so..
 
 
-
 class Tab(DOSMFrame):
     def __init__(self, master, logger, **options):
         super(Tab, self).__init__(master, logger, **options)
@@ -25,6 +24,7 @@ class Tab(DOSMFrame):
         self.varStats = StringVar()
         self.varAddress = StringVar()
         self.selected = self.keys[0]
+
 
     def show(self):
         labelselect = ttk.Label(self, justify="center", text="Please select an interface")
