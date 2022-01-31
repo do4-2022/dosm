@@ -1,9 +1,9 @@
 from integrator.frame import DOSMFrame
 
-
 class Tab(DOSMFrame):
     def __init__(self, logger):
         print("some cool logger passing to super")
+
 
     def show(self):
         return super().show()
