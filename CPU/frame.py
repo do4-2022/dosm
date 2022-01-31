@@ -1,7 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-from turtle import width
-from typing_extensions import Self
 
 from integrator import frame as modelFrame
 from logger.level import LogLevel
