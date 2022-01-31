@@ -3,7 +3,6 @@ from tkinter import *
 from tkinter import ttk
 import psutil
 
-
 class Tab(DOSMFrame):
     def __init__(self, master, logger, **options):
         super(Tab, self).__init__(master, logger, **options)
