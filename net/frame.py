@@ -43,7 +43,7 @@ class Tab(DOSMFrame):
         stats.grid(row=4, column=0)
 
     def update(self, dt):
-        print(dt)
+        return super().update(dt)
 
     def hide(self):
         return super().hide()
