@@ -25,7 +25,6 @@ class Tab(DOSMFrame):
         self.varAddress = StringVar()
         self.selected = self.keys[0]
 
-
     def show(self):
         labelselect = ttk.Label(self, justify="center", text="Please select an interface")
         labelselect.grid(row=0, column=0)
