@@ -8,6 +8,7 @@ import psutil
 #   -draw switchband usage and find a library to do so..
 
 
+
 class Tab(DOSMFrame):
     def __init__(self, master, logger, **options):
         super(Tab, self).__init__(master, logger, **options)
