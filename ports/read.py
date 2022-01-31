@@ -1,4 +1,6 @@
 import os
+import psutil
+
 
 def readProcs():
     '''
@@ -10,5 +12,15 @@ def readProcs():
             procs.append(pid)
     return procs
 
+
 if __name__ == '__main__':
-    print(readProcs())
+
+    connextions = psutil.net_connections()
+
+    for con in connextions:
+        print(con.pid,con.laddr)
+
+
+
+    # print(psutil.net_connections())
+    # print(readProcs())
