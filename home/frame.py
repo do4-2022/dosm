@@ -32,7 +32,6 @@ title.pack(fill="x")
 # label.config(font=("Arial",18))
 # label.pack(fill="x")
 
-
 grid_frame=Frame(mainframe)
 for r in range(3):
     for c in range(3):
