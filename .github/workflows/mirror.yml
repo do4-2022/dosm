@@ -15,5 +15,4 @@ jobs:
       - uses: pixta-dev/repository-mirroring-action@v1
         with:
           target_repo_url: "git@gitlab.polytech.umontpellier.fr:yann.pomie/dosm.git"
-          ssh_username: ${{ secrets.GITLAB_USERNAME }}
           ssh_private_key: ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
