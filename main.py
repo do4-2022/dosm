@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
 
+from time import time
 import tkinter as tk
 from tkinter import ttk
+
+import config
+
+
+def update(root_window, frames, dt):
+    for frame in frames:
+        frame['widget'].update()
+    root_window.after(config.UPDATE_INTERVAL, update, root_window, frames, time() - dt)
 
 
 def main():
@@ -16,6 +25,7 @@ def main():
     for frame in frames:
         notebook.add(frame['widget'], text=frame['name'])
 
+    root_window.after(config.UPDATE_INTERVAL, update, root_window, frames, 0)
     root_window.mainloop()
 
 
