@@ -1,15 +1,18 @@
+from ast import Str
+from logger.context import LoggerContext
 from logger.factory import LoggerFactory
+
 
 class Logger:
 
   @staticmethod
-  def createLogger(factory: LoggerFactory):
-    return Logger(factory)
+  def create_logger(name: Str, factory: LoggerFactory):
+    return Logger(name, factory)
 
-  def __init__(self, factory: LoggerFactory):
+  def __init__(self, name: Str, factory: LoggerFactory):
+    self.context = LoggerContext(name, [])
     self.factory = factory
 
-  def writeLog(self, message: str):
-    self.factory.appendLog(message)
-
+  def write_log(self, message: str):
+    self.factory.append_log(self.context, message)
 
