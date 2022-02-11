@@ -1,7 +1,7 @@
 
 # Represent a disk partition.
 
-class partition:
+class Partition:
     """
     This class represents a disk partition.
     """
@@ -47,4 +47,4 @@ class partition:
         return self.blocks >= other.blocks
     
     def __hash__(self):
-        return hash(self.major)
+        return hash(self.name)
