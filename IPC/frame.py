@@ -1,6 +1,7 @@
-import tkinter
+import os
 import tkinter as tk
 from integrator import frame  
+import psutil
 
 class Tab(frame.DOSMFrame):
     counter = 0
@@ -11,6 +12,7 @@ class Tab(frame.DOSMFrame):
     def show(self):
         self.label = tk.Label(self, text="IPC Works! {}".format(self.counter) )
         self.label.pack()
+        self.load_lsof();
 
     def update(self, dt):
         """
@@ -21,3 +23,9 @@ class Tab(frame.DOSMFrame):
 
     def hide(self):
         pass
+
+    def load_lsof(self):
+        #stdout = os.system('lsof | grep FIFO')
+        #print(stdout)
+        for proc in psutil.process_iter():
+            print(proc.open_files())
