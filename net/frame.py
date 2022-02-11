@@ -24,8 +24,6 @@ class Tab(DOSMFrame):
                                 height=10, state="normal", values=self.keys)
         comboBox.pack(side=LEFT)
 
-
-
     def update(self, dt):
         return super().update(dt)
 
