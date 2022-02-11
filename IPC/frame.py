@@ -9,12 +9,14 @@ class Tab(frame.DOSMFrame):
     def __init__(self, master, logger, **options):
         self.pipes = {}
         self.shared_memory = 0
+        self.semaphores = 0
         super().__init__(master, logger, **options)
 
     def show(self):
         self.label = tk.Label(self, text="IPC Works! {}".format(self.counter) )
         self.label.pack()
         self.load_shared_memory()
+        self.load_semaphores()
         self.load_pipes()
 
     def update(self, dt):
@@ -47,5 +49,12 @@ class Tab(frame.DOSMFrame):
             decoded = line.decode().strip('\n')
             if decoded.isnumeric():
                 self.shared_memory += int(decoded)
-        print(self.shared_memory / 1000000)
 
+    def load_semaphores(self):
+        self.semaphores = 0
+        shm = subprocess.Popen(["ipcs", "-sc"], stdout=subprocess.PIPE)
+        awk = subprocess.Popen(["awk", "NR > 3 { print $4 }"] ,stdin=shm.stdout, stdout=subprocess.PIPE)
+        for line in awk.stdout.readlines():
+            decoded = line.decode().strip('\n')
+            if len(decoded) > 1:
+                self.semaphores += 1
