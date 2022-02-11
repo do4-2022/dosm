@@ -1,9 +1,8 @@
-import integrator
+from integrator import frame
 
-
-class Tab (integrator.frame.DOSMFrame):
-    def __init__(self, logger):
-        super().__init__(logger)
+class PortTab (frame.DOSMFrame):
+    def __init__(self, master, logger, **options):
+        super().__init__(master, logger, **options)
 
 
         
