@@ -19,9 +19,9 @@ class Tab(DOSMFrame):
             self.keys.append(key)
 
     def show(self):
-        noteBook = ttk.Combobox(self, justify="left",
+        comboBox = ttk.Combobox(self, justify="left",
                                 height=10, state="normal", values=self.keys)
-        noteBook.pack(side=LEFT)
+        comboBox.pack(side=LEFT)
 
 
     def update(self, dt):
