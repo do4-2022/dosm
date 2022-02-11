@@ -25,11 +25,13 @@ def read_connexions():
     out = []
 
     for con in connexions:
-
         name = "unknown"
+
+        pid = "unknown"
 
         if (con.pid is not None):
             try:
+                pid = con.pid
                 name = psutil.Process(con.pid).name()
             except:
                 pass
@@ -46,15 +48,24 @@ def read_connexions():
             remote_addr = con.raddr.ip
             remote_port = str(con.raddr.port)
 
+        con_type = "unknown"
+
+        if (con.type.name == "SOCK_STREAM"):
+            con_type = "TCP"
+        elif (con.type.name == "SOCK_DGRAM"):
+            con_type = "UDP"
+        elif (con.type.name == "SOCK_SEQPACKET"):
+            con_type = "SCTP"
+
         out.append({
-            'pid': con.pid,
+            'pid': pid,
             'name': name,
             'local_addr': local_addr,
             'local_port': local_port,
             'remote_addr': remote_addr,
             'remote_port': remote_port,
             'status': con.status,
-            'type': con.type
+            'type': con_type
         })
     return out
 
