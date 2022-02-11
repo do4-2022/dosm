@@ -15,22 +15,21 @@ Each person will work on his module. Everyone have to implements a package deriv
 1. See your modifications in your `dev.py` file. This file will be ignore by commits
 
 **Pushing your works**  
-When you're done with your work, here are the step to push :
+When you're done with your work, here are the step to push.
 ```bash
 git fetch
 git rebase origin/main #Get the last modifications from the main, 
 ```
 
-
-If there are conflicts :
+If there are conflicts, check the file and fix the MC. Then continue the process until the rebase is completely done.
 ```bash
-Check the file and fix the MC
 git rebase continue
 ```
 
+Finally, save and push your work.
 ```bash
 git add .
-git commit -m "" # Describe here what you have done
+git commit -m "any modification done" # Describe here what you have done
 git push
 git merge <branch-name>
 ```
@@ -50,3 +49,28 @@ Methods :
 - readMetric
 - readLog
 - writeLog
+
+## Testing
+
+Please create a `dev.py` file at the root of this project. This file will not be saved through git.
+
+Here is a classical example to test you're frame.
+
+```python
+# import tkinter (as tk is optional) and your frame
+import tkinter as tk
+from your_package import frame
+
+# create a new window
+window = tk.Tk()
+
+# create a new frame from your custom class
+a_frame_instance = frame.YouFrame(window, None)
+a_frame_instance.pack()
+
+# if you want you can test your frame methods like this
+a_frame_instance.show() # for example
+
+# run in event-driven mode. This line is blocking since the window is opened
+window.mainloop()
+```
