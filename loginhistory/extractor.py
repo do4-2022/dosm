@@ -1,0 +1,31 @@
+import os
+import re
+
+def get_logins_list():
+    list = os.popen('last -F -d | sed \'/system boot/d\'').read()
+
+    entries = list.split("\n")
+
+    result = []
+
+    since = ""
+
+    for entry in entries:
+
+        if(re.match(r"wtmp begins.*", entry)):
+            since = entry[12:-1]
+            break
+
+        if(entry != ""):
+            result.append( {
+            "user": entry[0:8],
+            "tty": entry[9:21],
+            "ip": entry[22:38],
+            "date": entry[39:62],
+            "state/loggedout": entry[66:91],
+            "uptime": entry[92:99]
+        })
+
+    return {"since": since, "entries": result}
+
+print(get_logins_list())
