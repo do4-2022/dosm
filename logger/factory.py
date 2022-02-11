@@ -1,10 +1,17 @@
-from logger.logger import Logger
+from os import getenv
+from logger.writer import LoggerWriter
 
 class LoggerFactory:
 
-  def createLogger(self) -> Logger:
-    return Logger(self)
+  def __init__(self):
+    filePath = getenv('LOGGER_LOG_PATH')
+    if filePath is None:
+      filePath = 'app.log'
+
+    self.logWriter = LoggerWriter(filePath)
+    self.logWriter.open()
 
   def appendLog(self, message: str):
-    # todo
+    # todo: compute timestamp and module name
+    self.logWriter.write(message)
     return
