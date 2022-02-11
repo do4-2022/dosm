@@ -5,6 +5,8 @@ from ports import read
 
 columns = ["local port", "local addr", "remote addr",
            "remote port", "PID", "name", "status", "type"]
+colWidth = 100
+rowHeight = 20
 
 
 class PortTab (frame.DOSMFrame):
@@ -12,27 +14,39 @@ class PortTab (frame.DOSMFrame):
         super().__init__(master, logger, **options)
 
     def show(self):
-        tree = ttk.Treeview(self, columns=columns, show="headings", height=30)
-        for head in columns:
-            tree.heading(head, text=head)
-
-        #mylist = tk.Listbox(self, yscrollcommand=scrollbar.set)
-
         res = read.read_connexions()
 
-        print(len(res))
-        for item in res:
-            tree.insert(
-                '', tk.END, values=(item['local_port'], item['local_addr'], item['remote_addr'], item['remote_port'], item['pid'], item['name'], item['status'], item['type']))
-        
-        
-        
-        tree.grid(row=0, column=0, sticky='nsew')
+        canvas = tk.Canvas(self, width=500, height=500, scrollregion=(0, 0, (len(columns) + 1) *
+                           colWidth, len(res) * rowHeight))
 
-        scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=tree.yview)
-        tree.configure(yscroll=scrollbar.set)
-        scrollbar.config(command=tree.yview)
-        scrollbar.grid(row=0, column=1, sticky='ns')
+        for i in range(len(columns)):
+            head = columns[i]
+            canvas.create_text(i*colWidth, 0, text=head,  anchor=tk.NW)
+
+        hbar = tk.Scrollbar(self, orient=tk.HORIZONTAL)
+
+        hbar.pack(side=tk.BOTTOM, fill=tk.X)
+        hbar.config(command=canvas.xview)
+        vbar = tk.Scrollbar(self, orient=tk.VERTICAL)
+        vbar.pack(side=tk.RIGHT, fill=tk.Y)
+        vbar.config(command=canvas.yview)
+
+        canvas.config(width=500, height=500)
+        canvas.config(xscrollcommand=hbar.set, yscrollcommand=vbar.set)
+        canvas.pack(side=tk.LEFT, expand=True, fill=tk.BOTH)
+
+        print(len(res))
+        for item in range(len(res)):
+            canvas.create_text(10, (item + 1)*rowHeight,
+                               text=item, anchor=tk.NW)
+
+        # canvas
+
+        # scrollbar = ttk.Scrollbar(
+        #     self, orient=tk.VERTICAL, command=canvas.yview)
+        # canvas.config(yscrollcommand == scrollbar.set)
+        # scrollbar.config(command=canvas.yview)
+        # scrollbar
 
         # scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         #
