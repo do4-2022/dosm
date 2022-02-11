@@ -58,7 +58,6 @@ class Tab(DOSMFrame):
 
         self.animate(self.selected)
 
-
     def update(self, dt):
         self.animate(self.selected)
 
