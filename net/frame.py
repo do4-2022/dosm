@@ -1,6 +1,6 @@
 import json
 
-from integrator.frame import DOSMFrame
+from integrator import base_frame as DOSMFrame
 from logger.logger import Logger
 from logger.level import LogLevel
 
