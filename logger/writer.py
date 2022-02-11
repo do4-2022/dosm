@@ -3,15 +3,20 @@ from ast import Str
 
 class LoggerWriter:
 
-  def __init__(self, filepath: Str):
-    self.filepath = filepath
+  def __init__(self):
+    self.file = None
 
-  def open(self):
+  def open(self, filepath: Str):
     try:
       self.opened = True
-      self.file = open(self.filepath, 'a')
+      self.file = open(filepath, 'a')
     except IOError as error:
       print(error)
+
+  def close(self):
+    if not self.file is None:
+      self.file.close()
+    self.opened = False
 
   def write(self, str: Str):
     if not self.opened:
