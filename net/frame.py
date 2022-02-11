@@ -11,7 +11,6 @@ import psutil
 import math
 
 
-
 class Tab(DOSMFrame):
     def __init__(self, master, logger, **options):
         super(Tab, self).__init__(master, logger, **options)
@@ -85,7 +84,6 @@ class Tab(DOSMFrame):
         statssent.grid(row=3, column=2)
 
         self.updateValues()
-
 
     def update(self, dt):
         self.updateValues()
