@@ -86,6 +86,7 @@ class Tab(DOSMFrame):
 
         self.updateValues()
 
+
     def update(self, dt):
         self.updateValues()
         self.logger.write_log(json.dumps(self.if_counters))
