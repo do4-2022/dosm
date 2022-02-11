@@ -38,11 +38,10 @@ def generateText():
     text += f"Average load :  {psutil.getloadavg()}"
     return text
     
-
 def textRefresher():
     global label
     label.config(text=generateText())
-    label.after(1000, textRefresher)
+    label.after(1000, textRefresher) # every second...
 
 def test():
     print( psutil.cpu_percent(interval=0.5, percpu=False) )
