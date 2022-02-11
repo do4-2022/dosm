@@ -1,5 +1,6 @@
 from os import getenv
 from logger.context import LoggerContext
+from logger.level import LogLevel
 from logger.writer import LoggerWriter
 from datetime import datetime
 
@@ -17,7 +18,6 @@ class LoggerFactory:
   def get_current_time(self):
     return datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
-  def append_log(self, context: LoggerContext, message: str):
-    # todo: compute module name
-    self.log_writer.write(f"[%s] [%s]%s %s" % (self.get_current_time(), context.get_name(), context.get_scopes(), message))
+  def append_log(self, context: LoggerContext, level: LogLevel, message: str):
+    self.log_writer.write(f"[%s] [%s] [%s]%s %s" % (self.get_current_time(), level, context.get_name(), context.get_scopes(), message))
     return

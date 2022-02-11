@@ -1,6 +1,7 @@
 from ast import Str
 from logger.context import LoggerContext
 from logger.factory import LoggerFactory
+from logger.level import LogLevel
 
 
 class Logger:
@@ -13,6 +14,6 @@ class Logger:
     self.context = LoggerContext(name, [])
     self.factory = factory
 
-  def write_log(self, message: str):
-    self.factory.append_log(self.context, message)
+  def write_log(self, message: str, level: LogLevel = LogLevel.INFO):
+    self.factory.append_log(self.context, level, message)
 
