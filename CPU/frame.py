@@ -1,7 +1,7 @@
-
 from tkinter import *
 from integrator import frame as modelFrame
 import psutil
+
 
 
 def createFrame(window):
@@ -43,7 +43,6 @@ def textRefresher():
     global label
     label.config(text=generateText())
     label.after(1000, textRefresher)
-
 
 def test():
     print( psutil.cpu_percent(interval=0.5, percpu=False) )
