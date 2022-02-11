@@ -1,3 +1,4 @@
+from logging import root
 import tkinter as tk
 from integrator import frame as modelFrame
 import psutil
@@ -5,12 +6,14 @@ import psutil
 
 
 def createFrame(window):
-
-
     frame = tk.Canvas(window, width=1000, height=680, bg="#BBBBF9")
     frame.place(x=0, y=0)
-    l = tk.Label(frame, text = generateText())
-    l.place(x=0, y=0)
+    global label
+    label = tk.Label(frame, anchor='w', justify=tk.LEFT)
+    label.place(x=0, y=0)
+    textRefresher()
+    
+
 
 
 def generateText():
@@ -26,7 +29,10 @@ def generateText():
 
     return text
     
-
+def textRefresher():
+    global label
+    label.config(text=generateText())
+    label.after(1000, textRefresher) # every second...
 
 def test():
     print( psutil.cpu_percent(interval=0.5, percpu=False) )
