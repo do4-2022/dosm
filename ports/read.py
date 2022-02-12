@@ -25,10 +25,11 @@ def read_connexions():
     out = []
 
     for con in connexions:
+
+        # Parse name and pid
+
         name = "unknown"
-
         pid = "unknown"
-
         if (con.pid is not None):
             try:
                 pid = con.pid
@@ -36,17 +37,23 @@ def read_connexions():
             except:
                 pass
 
-        local_addr = "unknown"
+        # Parse local address and port
+
+        local_addr = ""
         local_port = ""
         if (con.laddr != ()):
             local_addr = con.laddr.ip
             local_port = str(con.laddr.port)
+
+        # Parse remote address and port
 
         remote_addr = ""
         remote_port = ""
         if (con.raddr != ()):
             remote_addr = con.raddr.ip
             remote_port = str(con.raddr.port)
+
+        # Parse connexion type
 
         con_type = "unknown"
 
