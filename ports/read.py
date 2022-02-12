@@ -64,6 +64,13 @@ def read_connexions():
         elif (con.type.name == "SOCK_SEQPACKET"):
             con_type = "SCTP"
 
+        # Parse status
+
+        status = con.status
+
+        # if status == "NONE":
+        #     status = "unknown"
+
         out.append({
             'pid': pid,
             'name': name,
@@ -71,7 +78,7 @@ def read_connexions():
             'local_port': local_port,
             'remote_addr': remote_addr,
             'remote_port': remote_port,
-            'status': con.status,
+            'status': status,
             'type': con_type
         })
     return out
