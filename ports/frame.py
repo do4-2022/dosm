@@ -3,18 +3,21 @@ import tkinter as tk
 from tkinter import ttk
 import sys
 from ports import read
+from logger.logger import Logger
+from logger.level import LogLevel
+import json
 
 columns = ["local port", "local addr", "remote addr",
            "remote port", "PID", "name", "status", "type"]
 row_height = 20
 
-"""
-This frame is used to display the active network connexions
-"""
-
 
 class PortTab (frame.DOSMFrame):
-    def __init__(self, master, logger, **options):
+    """
+    This frame is used to display the active network connexions, every update the status of all open ports is dumped as json
+    """
+
+    def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
 
         """
@@ -34,6 +37,8 @@ class PortTab (frame.DOSMFrame):
         """
 
         if (self.winfo_width() != self.old_width):
+            self.logger.write_log(
+                "Window has been resized, redrawing frame", level=LogLevel.DEBUG)
             self.show()
             self.elements = []
 
@@ -52,6 +57,9 @@ class PortTab (frame.DOSMFrame):
         # add new elements
 
         for item in self.data:
+
+            self.logger.write_log(json.dumps(item), level=LogLevel.INFO)
+
             out = self.tree.insert(
                 '', 'end', values=(item['local_port'], item['local_addr'], item['remote_addr'], item['remote_port'], item['pid'], item['name'], item['status'], item['type']))
             self.elements.append(out)
