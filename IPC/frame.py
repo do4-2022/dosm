@@ -16,13 +16,17 @@ class Tab(frame.DOSMFrame):
         super().__init__(master, logger, **options)
 
     def show(self):
-        self.label = tk.Label(self, text="IPC Works! {}".format(self.counter) )
-        self.label.pack()
+        self.semaphore_label = tk.Label(self, text="")
+        self.shared_memory_label = tk.Label(self, text="")
+        self.semaphore_label.pack()
+        self.shared_memory_label.pack()
 
     def update(self, dt):
         self.counter = self.counter + 1
         self.load_shared_memory()
         self.load_semaphores()
+        self.semaphore_label["text"] = "Number of semaphores : {}".format(self.semaphores)
+        self.shared_memory_label["text"] = "Total shared  memory usage : {} MB".format(self.shared_memory / 1000)
         self.show()
 
     def hide(self):
