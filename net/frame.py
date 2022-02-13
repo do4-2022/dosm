@@ -1,6 +1,9 @@
 from integrator.frame import DOSMFrame
 from tkinter import *
 from tkinter import ttk
+
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import psutil
 
 #TODO
@@ -15,21 +18,19 @@ class Tab(DOSMFrame):
         self.interfaces = psutil.net_if_addrs()
         self.interfaces.pop('lo')
 
-        self.keys = []
-        for key in self.interfaces.keys():
-            self.keys.append(key)
-
-        print(self.interfaces)
+        self.if_stats = psutil.net_if_stats()
+        self.if_stats.pop('lo')
 
         self.varStats = StringVar()
         self.varAddress = StringVar()
-        self.selected = self.keys[0]
 
     def show(self):
         labelselect = ttk.Label(self, justify="center", text="Please select an interface")
         labelselect.grid(row=0, column=0)
 
-        comboBox = ttk.Combobox(self, justify="center", height=10, state="readonly", values=self.keys)
+        comboBox = ttk.Combobox(self, justify="center", height=10,
+                                state="readonly", values=list(self.interfaces.keys()))
+
         comboBox.bind('<<ComboboxSelected>>', func=self.changeSelected)
         comboBox.grid(row=1, column=0)
 
@@ -41,6 +42,10 @@ class Tab(DOSMFrame):
 
         stats = ttk.Label(self, justify="center", textvariable=self.varStats)
         stats.grid(row=4, column=0)
+
+        figure = plt.figure(figsize=(6, 5), dpi=100)
+        diagram = FigureCanvasTkAgg(figure=figure, master=self)
+        diagram.get_tk_widget().grid(column=1)
 
     def update(self, dt):
         return super().update(dt)
@@ -60,3 +65,14 @@ class Tab(DOSMFrame):
     def getStats(self, interface):
         return f"Netmask : {self.interfaces.get(interface)[0].__getattribute__('netmask')}\n"\
                + f"Broadcast address : {self.interfaces.get(interface)[0].__getattribute__('broadcast')}"
+
+    def updateValues(self):
+        self.if_stats = psutil.net_if_stats()
+
+    def animate(self, interface):
+        self.updateValues()
+        #TODO
+        #foreach val
+            #print into matplotlib
+        #clear
+        pass
