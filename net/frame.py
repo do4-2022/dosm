@@ -18,14 +18,14 @@ class Tab(DOSMFrame):
         self.keys = []
         for key in self.interfaces.keys():
             self.keys.append(key)
-        self.varAdress = StringVar()
+        self.varAddress = StringVar()
         self.selected = self.keys[0]
 
     def show(self):
         comboBox = ttk.Combobox(self, justify="left", height=10, state="readonly", values=self.keys)
         comboBox.bind('<<ComboboxSelected>>', func=self.changeSelected)
         comboBox.pack(side=LEFT)
-        ipaddress = ttk.Label(self, justify="left", textvariable=self.varAdress)
+        ipaddress = ttk.Label(self, justify="left", textvariable=self.varAddress)
         ipaddress.pack(side=LEFT)
 
     def update(self, dt):
@@ -37,7 +37,7 @@ class Tab(DOSMFrame):
     def changeSelected(self, event):
         if event:
             self.selected = event.widget.get()
-            self.varAdress.set(str(self.getIpAddress(self.selected)))
+            self.varAddress.set(str(self.getIpAddress(self.selected)))
 
     def getIpAddress(self, interface):
         return self.interfaces.get(interface)[0].__getattribute__('address')
