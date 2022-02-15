@@ -1,27 +1,22 @@
-from tkinter import Frame, Label
+from tkinter import Frame
 from integrator import frame
 from home.mini_frame import MiniFrame
-
-
-NB_OF_MINI_FRAME = 9
+from config import NB_OF_MINI_FRAME
 
 class Tab(frame.DOSMFrame):
     def __init__(self, master, logger, **options):
         super().__init__(master, logger, **options)
-        self.logger = logger
         self.mini_frames = []
         
     def show(self):
-        # main frame
-        mainframe = Frame(self.master, bg='white')
-        mainframe.pack(fill="both", expand=True)
-
         # grid
-        grid_frame = Frame(mainframe)
+        grid_frame = Frame(self)
 
         # create mini frames
         for _ in range(NB_OF_MINI_FRAME + 1):
-            self.mini_frames.append(MiniFrame(grid_frame, self.logger))
+            mini_frame = MiniFrame(grid_frame, self.logger)
+            self.mini_frames.append(mini_frame)
+            mini_frame.show()
 
         # fill the grid
         index = 0
@@ -35,9 +30,6 @@ class Tab(frame.DOSMFrame):
         grid_frame.pack(fill="both", expand=True)
 
     def update(self, dt):
-        """
-        `dt` is the elapsed delta time since the last update in second
-        """
         for i in len(self.mini_frames):
             self.mini_frames[i].update(dt)
 

@@ -1,16 +1,6 @@
-import tkinter as tk
+from integrator import frame
 
 
-class MiniFrame(tk.Frame):
+class MiniFrame(frame.DOSMFrame):
     def __init__(self, master, logger, **options):
-      self.logger = logger
-      super().__init__(master, width=300, height=250, bg="#5D55C1", **options)
-
-    def update(self, dt):
-      """
-      `dt` is the elapsed delta time since the last update in second
-      """
-      pass
-    
-    def hide(self):
-      pass
+      super().__init__(master, logger, width=300, height=250, bg="#5D55C1", **options)
