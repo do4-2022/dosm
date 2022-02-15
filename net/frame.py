@@ -18,8 +18,14 @@ class Tab(DOSMFrame):
         self.interfaces = psutil.net_if_addrs()
         self.interfaces.pop('lo')
 
-        self.if_stats = psutil.net_if_stats()
+        self.if_stats = dict(psutil.net_if_stats())
         self.if_stats.pop('lo')
+
+        for key in self.if_stats.keys():
+            self.if_stats[key] = [0 for x in range(0, 10)]
+
+        self.selected = None
+        self.axes = None
 
         self.varStats = StringVar()
         self.varAddress = StringVar()
@@ -43,12 +49,17 @@ class Tab(DOSMFrame):
         stats = ttk.Label(self, justify="center", textvariable=self.varStats)
         stats.grid(row=4, column=0)
 
-        figure = plt.figure(figsize=(6, 5), dpi=100)
+        figure = plt.Figure(figsize=(6, 5), dpi=100)
         diagram = FigureCanvasTkAgg(figure=figure, master=self)
         diagram.get_tk_widget().grid(column=1)
+        self.axes = figure.add_subplot(111)
+#        Y = [0.2, 0.4, 0.6, 0.8, 1]
+        self.animate(self.selected)
 
     def update(self, dt):
-        return super().update(dt)
+        self.animate(self.selected)
+
+        #log here
 
     def hide(self):
         return super().hide()
@@ -67,12 +78,18 @@ class Tab(DOSMFrame):
                + f"Broadcast address : {self.interfaces.get(interface)[0].__getattribute__('broadcast')}"
 
     def updateValues(self):
-        self.if_stats = psutil.net_if_stats()
+        fetched = psutil.net_if_stats()
+        for key in self.if_stats:
+            self.if_stats[key].append(fetched.get(key).__getattribute__('speed'))
+            self.if_stats.get(key).pop(0)
+
 
     def animate(self, interface):
+        self.axes.clear()
         self.updateValues()
+
+        self.axes.plot(self.if_stats.get(self.selected), range(0, 10), linestyle='dotted', color='r')
         #TODO
         #foreach val
             #print into matplotlib
-        #clear
         pass
