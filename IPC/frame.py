@@ -5,7 +5,6 @@ from integrator import frame
 from threading import Thread
 
 class Tab(frame.DOSMFrame):
-    counter = 0
     working = False
 
     def __init__(self, master, logger, **options):
@@ -20,31 +19,60 @@ class Tab(frame.DOSMFrame):
         self.shared_memory_label = tk.Label(self, text="")
         self.semaphore_label.pack()
         self.shared_memory_label.pack()
+        self.set = tk.ttk.Treeview(self)
+        self.set.pack()
+
+        self.set['columns']= ('process', 'pipe_number')
+        self.set.column("#0", width=0,  stretch=tk.NO)
+        self.set.column("process",anchor=tk.CENTER, width=150)
+        self.set.column("pipe_number",anchor=tk.CENTER, width=100)
+
+        self.set.heading("#0",text="",anchor=tk.CENTER)
+        self.set.heading("process",text="Process",anchor=tk.CENTER)
+        self.set.heading("pipe_number",text="# of pipes",anchor=tk.CENTER)
+
+        self.set.insert(parent='',index='end',iid=0,text='',
+        values=('Loading','please wait'))
+
 
     def update(self, dt):
-        self.counter = self.counter + 1
         self.load_shared_memory()
         self.load_semaphores()
         self.semaphore_label["text"] = "Number of semaphores : {}".format(self.semaphores)
         self.shared_memory_label["text"] = "Total shared  memory usage : {} MB".format(self.shared_memory / 1000)
-        self.show()
+
+        if not self.working:
+            self.working = True
+            for index, ( key, value ) in enumerate(self.pipes.items()):
+                if self.set.exists(index):
+                    self.set.delete(index)
+                self.set.insert(parent='',index='end',iid=index, text='',
+                values=(key, value))
+
+            self.working = False
 
     def hide(self):
         pass
 
     def load_pipes(self):
-        self.working = True
-        self.pipes = {}
         lsof = subprocess.Popen(["lsof"], stdout=subprocess.PIPE)
         grep = subprocess.Popen(["grep", "FIFO"], stdin=lsof.stdout, stdout=subprocess.PIPE)
         awk = subprocess.Popen(["awk", "{print $1}"], stdin=grep.stdout, stdout=subprocess.PIPE)
+
+        while self.working:
+            pass
+
+        self.working = True
+        self.pipes = {}
         for line in awk.stdout.readlines():
             number = self.pipes.get(line.decode().strip('\n'))
             if number == None:
                 self.pipes[line.decode().strip('\n')] = 1
             else:
                 self.pipes[line.decode().strip('\n')] = number + 1
+
         self.working = False
+
         threading.Timer(30, self.load_pipes)
             
     def load_shared_memory(self):
