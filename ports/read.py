@@ -68,9 +68,6 @@ def read_connexions():
 
         status = con.status
 
-        # if status == "NONE":
-        #     status = "unknown"
-
         out.append({
             'pid': pid,
             'name': name,
@@ -82,11 +79,3 @@ def read_connexions():
             'type': con_type
         })
     return out
-
-
-if __name__ == '__main__':
-
-    print(read_connexions())
-
-    # print(psutil.net_connections())
-    # print(readProcs())

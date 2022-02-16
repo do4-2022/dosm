@@ -1,11 +1,13 @@
-from integrator import frame
+import json
+import sys
 import tkinter as tk
 from tkinter import ttk
-import sys
-from ports import read
-from logger.logger import Logger
+
+from integrator import frame
 from logger.level import LogLevel
-import json
+from logger.logger import Logger
+
+from ports import read
 
 columns = ["local port", "local addr", "remote addr",
            "remote port", "PID", "name", "status", "type"]
