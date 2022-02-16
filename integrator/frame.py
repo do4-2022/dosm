@@ -4,10 +4,12 @@ import tkinter as tk
 class DOSMFrame(tk.Frame):
     def __init__(self, master, logger, **options):
         self.logger = logger
+        self.name = 'Integrator'
+        self.shown = False
         super().__init__(master, **options)
 
     def show(self):
-        pass
+        self.shown = True
 
     def update(self, dt):
         """
@@ -16,4 +18,4 @@ class DOSMFrame(tk.Frame):
         pass
 
     def hide(self):
-        pass
+        self.shown = False
