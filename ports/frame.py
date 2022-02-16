@@ -14,7 +14,7 @@ columns = ["local port", "local addr", "remote addr",
 row_height = 20
 
 
-class PortTab (frame.DOSMFrame):
+class Tab (frame.DOSMFrame):
     """
     This frame is used to display the active network connexions, every update the status of all open ports is dumped as json
     """
