@@ -58,10 +58,8 @@ class PortTab (frame.DOSMFrame):
 
         # add new elements
 
+        self.logger.write_log(json.dumps(self.data), level=LogLevel.INFO)
         for item in self.data:
-
-            self.logger.write_log(json.dumps(item), level=LogLevel.INFO)
-
             out = self.tree.insert(
                 '', 'end', values=(item['local_port'], item['local_addr'], item['remote_addr'], item['remote_port'], item['pid'], item['name'], item['status'], item['type']))
             self.elements.append(out)
