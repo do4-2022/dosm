@@ -60,13 +60,17 @@ Here is a classical example to test you're frame.
 # import tkinter (as tk is optional) and your frame
 import tkinter as tk
 from your_package import frame
+
 # create a new window
 window = tk.Tk()
+
 # create a new frame from your custom class
 a_frame_instance = frame.YouFrame(window, None)
 a_frame_instance.pack()
+
 # if you want you can test your frame methods like this
 a_frame_instance.show() # for example
+
 # run in event-driven mode. This line is blocking since the window is opened
 window.mainloop()
 ```
