@@ -1,29 +1,27 @@
-from ast import Str
-
 
 class LoggerWriter:
-
   def __init__(self):
     self.file = None
 
-  def open(self, filepath: Str):
+  def open(self, filepath):
     try:
-      self.opened = True
       self.file = open(filepath, 'a')
+      self.opened = True
     except IOError as error:
       print(error)
 
   def close(self):
-    if not self.file is None:
+    if self.file is not None:
       self.file.close()
     self.opened = False
 
-  def write(self, str: Str):
+  def write(self, s: str):
     if not self.opened:
-      print(f"Cannot write to file %s because it is not opened" % self.filepath)
+      print("Cannot write to file because it is not opened")
     
-    try:
-      self.file.write(f"%s\n" % str)
-    except IOError as error:
-      print(error)
+    if self.file is not None:
+      try:
+        self.file.write(f"{s}\n")
+      except IOError as error:
+        print(error)
   

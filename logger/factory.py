@@ -1,4 +1,3 @@
-from os import getenv
 from logger.context import LoggerContext
 from logger.file_manager import FileManager
 from logger.level import LogLevel
@@ -15,9 +14,8 @@ class LoggerFactory:
     self.file_manager.verify_path()
     self.file_manager.find_current_revision()
 
-  def append_log(self, context: LoggerContext, level: LogLevel, message: str):
-    self.log_writer.write(f"[%s] [%s] [%s]%s %s" % (get_current_time(), level, context.get_name(), context.get_scopes(), message))
-    return
+  def append_log(self, context: LoggerContext, level: str, message: str):
+    self.log_writer.write(f"[{get_current_time()}] [{level}] [{context.get_name()}] {context.get_scopes()} {message}")
 
   def log_file_change(self):
     self.log_writer.close()

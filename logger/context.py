@@ -1,9 +1,6 @@
-from ast import Str
-
-
 class LoggerContext:
 
-  def __init__(self, name: Str, scopes):
+  def __init__(self, name: str, scopes):
     self.name = name
     self.scopes = scopes
 
@@ -11,5 +8,5 @@ class LoggerContext:
     return self.name
 
   def get_scopes(self):
-    return " ".join([(f" [%s]" % scope) for scope in self.scopes])
+    return " ".join([f" [{scope}]" for scope in self.scopes])
 
