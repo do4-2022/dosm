@@ -20,7 +20,7 @@ class FileManager:
     self.on_file_change()
 
   def get_log_filepath(self):
-    return f"%s%s-%d.log" % (self.pathPrefix, self.current_date, self.revision)
+    return f"{self.pathPrefix}{self.current_date}-{self.revision}.log"
 
   def check_file_size(self):
     if not path.exists(self.get_log_filepath()):

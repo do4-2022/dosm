@@ -7,6 +7,7 @@ class Tab(frame.DOSMFrame):
     def __init__(self, master, logger, **options):
         super().__init__(master, logger, **options)
         self.mini_frames = []
+        self.name = 'Accueil'
         
     def show(self):
         # grid
@@ -30,9 +31,9 @@ class Tab(frame.DOSMFrame):
         grid_frame.pack(fill="both", expand=True)
 
     def update(self, dt):
-        for i in len(self.mini_frames):
-            self.mini_frames[i].update(dt)
+        for mini_frame in self.mini_frames:
+            mini_frame.update(dt)
 
     def hide(self):
-        for i in len(self.mini_frames):
-            self.mini_frames[i].hide()
+        for mini_frame in self.mini_frames:
+            mini_frame.hide()
