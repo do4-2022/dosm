@@ -2,29 +2,41 @@ from tkinter import *
 from integrator import frame as modelFrame
 import psutil
 
+from tkinter import *
+from tkinter import scrolledtext
 
 
-def createFrame(window):
+def createFrame(window):   
+    # main Frame
+    mainFrame = Frame(window)
+    mainFrame.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky=E+W+N+S)
 
-    canvas = Frame(window, width=200, height=200, bg="#FF0000")
-    canvas.grid(row = 0, column = 0, sticky=NSEW)
-    canvas.columnconfigure(0, weight=1)
-    canvas.rowconfigure(0, weight=1)
+    window.columnconfigure(0, weight=1)
+    window.rowconfigure(0, weight=1)
 
-    # frame = tk.Frame(canvas, bg="#00FF00")
-    # frame.grid(row = 0, column = 0, pady = 2)
-    # frame.columnconfigure(0, weight=1)
-    # frame.rowconfigure(0, weight=1)
+    mainFrame.rowconfigure(0, weight=1)
+    mainFrame.columnconfigure(0, weight=1)
 
-    # global label
-    # label = tk.Label(frame, anchor='w', justify=tk.LEFT)
+    # text Frame
+    mainFrame.rowconfigure(0, weight=1)
+    mainFrame.columnconfigure(0, weight=1)
+    textFrame = Frame(mainFrame, width=40, height=10, background="red")
+    textFrame.grid(row=0, column=0, columnspan=1, sticky=N+S+E+W)
+
+    # graph Frame
+    mainFrame.rowconfigure(0, weight=1)
+    mainFrame.columnconfigure(1, weight=1)
+    graphFrame = Frame(mainFrame, width=40, height=10, background="blue")
+    graphFrame.grid(row=0, column=1, columnspan=1, sticky=N+S+E+W)
+
+
+    # text data
+    global label
+    label = Label(textFrame, justify=LEFT)
+    label.pack()
+    textRefresher()
+
     
-    # frame2 = tk.Frame(canvas, bg="#0000FF")
-    # frame2.grid(row = 1, column = 0, pady = 2)
-    # frame2.columnconfigure(1, weight=1)
-    # frame2.rowconfigure(0, weight=1)
-
-    # textRefresher()
 
 def generateText():
     text =  f"Global CPU usage (%) : {psutil.cpu_percent(interval=0.5, percpu=False)} \n"
