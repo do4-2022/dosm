@@ -4,6 +4,7 @@ from time import time
 
 from config import MIN_WINDOW_SIZE, UPDATE_INTERVAL
 from home import frame as home_frame
+from ports import frame as ports_frame
 from logger import factory, logger
 
 from integrator import frame
@@ -32,6 +33,7 @@ class Integrator:
         # Create the tabs
         self.tabs = [
             home_frame.Tab(self.notebook, logger.Logger('home', self.logger_factory)),
+            ports_frame.Tab(self.notebook, logger.Logger('ports', self.logger_factory)),
         ]
 
         for tab in self.tabs:
