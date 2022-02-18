@@ -1,36 +1,71 @@
 from tkinter import *
-from integrator import frame as modelFrame
 import psutil
+from integrator import frame as modelFrame
+from logger.level import LogLevel
+from logger.logger import Logger
+
+class Tab (modelFrame.DOSMFrame):
+
+    def __init__(self, master, logger: Logger, **options):
+        super().__init__(master, logger, **options)
+
+    def show(self):   
+        # main Frame
+        mainFrame = Frame(self)
+        mainFrame.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky=E+W+N+S)
+
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
+
+        mainFrame.rowconfigure(0, weight=1)
+        mainFrame.columnconfigure(0, weight=1)
+
+        # text Frame
+        mainFrame.rowconfigure(0, weight=1)
+        mainFrame.columnconfigure(0, weight=1)
+        global textFrame
+        textFrame = Frame(mainFrame, width=40, height=10, background="red")
+        textFrame.grid(row=0, column=0, columnspan=1, sticky=N+S+E+W)
+
+        # graph Frame
+        mainFrame.rowconfigure(0, weight=1)
+        mainFrame.columnconfigure(1, weight=1)
+        graphFrame = Frame(mainFrame, width=40, height=10, background="blue")
+        graphFrame.grid(row=0, column=1, columnspan=1, sticky=N+S+E+W)
 
 
-def createFrame(window):   
-    # main Frame
-    mainFrame = Canvas(window)
-    mainFrame.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky=E+W+N+S)
-
-    window.columnconfigure(0, weight=1)
-    window.rowconfigure(0, weight=1)
-
-    mainFrame.rowconfigure(0, weight=1)
-    mainFrame.columnconfigure(0, weight=1)
-
-    # text Frame
-    mainFrame.rowconfigure(0, weight=1)
-    mainFrame.columnconfigure(0, weight=1)
-    global textFrame
-    textFrame = Frame(mainFrame, width=40, height=10, background="red")
-    textFrame.grid(row=0, column=0, columnspan=1, sticky=N+S+E+W)
-
-    # graph Frame
-    mainFrame.rowconfigure(0, weight=1)
-    mainFrame.columnconfigure(1, weight=1)
-    graphFrame = Frame(mainFrame, width=40, height=10, background="blue")
-    graphFrame.grid(row=0, column=1, columnspan=1, sticky=N+S+E+W)
+        # text data
+        self.generateLabel()
 
 
-    # text data
-    generateLabel()
-    textRefresher()
+
+    def generateLabel(self):
+        global textFrame
+        Label(textFrame, text="Global CPU information : \n", font='Helvetica 14 bold', justify=LEFT).pack()
+
+        global globalCPULabel
+        globalCPULabel = Label(textFrame, text=generateGlobalCPUText(), justify=LEFT)
+        globalCPULabel.pack(anchor='w')
+
+        Label(textFrame, text="Information Per CPU : \n", font='Helvetica 14 bold', justify=LEFT).pack()
+        
+        global perCPULabel
+        perCPULabel = Label(textFrame, text=generatePerCPUText(), justify=LEFT)
+        perCPULabel.pack(anchor='w')
+
+
+
+
+        
+    def update(self, dt):
+        global globalCPULabel
+        global perCPULabel
+        globalCPULabel.config(text=generateGlobalCPUText())
+        perCPULabel.config(text=generatePerCPUText())
+
+        globalCPULabel.after(dt, self.update, dt) # every second...
+
+
 
 def generateGlobalCPUText():
     freq = psutil.cpu_freq(percpu=False)
