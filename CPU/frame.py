@@ -3,67 +3,59 @@ import psutil
 from integrator import frame as modelFrame
 from logger.level import LogLevel
 from logger.logger import Logger
+from CPU import graph
 
 class Tab (modelFrame.DOSMFrame):
 
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
+        self.globalCPULabel = Label()
+        self.perCPULabel = Label()
+        self.cpuUsageGraph = graph.LineGraph(self)
 
     def show(self):   
-        # main Frame
-        mainFrame = Frame(self)
-        mainFrame.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky=E+W+N+S)
-
+        # Frame with one row and two columns
         self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
         self.rowconfigure(0, weight=1)
 
-        mainFrame.rowconfigure(0, weight=1)
-        mainFrame.columnconfigure(0, weight=1)
-
         # text Frame
-        mainFrame.rowconfigure(0, weight=1)
-        mainFrame.columnconfigure(0, weight=1)
-        global textFrame
-        textFrame = Frame(mainFrame, width=40, height=10, background="red")
+        textFrame = Frame(self, width=100, height=10)
         textFrame.grid(row=0, column=0, columnspan=1, sticky=N+S+E+W)
 
         # graph Frame
-        mainFrame.rowconfigure(0, weight=1)
-        mainFrame.columnconfigure(1, weight=1)
-        graphFrame = Frame(mainFrame, width=40, height=10, background="blue")
-        graphFrame.grid(row=0, column=1, columnspan=1, sticky=N+S+E+W)
-
+        graphFrame = Frame(self, width=100, height=10)
+        graphFrame.grid(row=0, column=1, sticky=N+S+E+W)
 
         # text data
-        self.generateLabel()
+        self.generateLabel(textFrame)
 
 
+        #graph data
+        self.cpuUsageGraph = graph.LineGraph(graphFrame,width=40, padx=40, pady=40)
+        self.cpuUsageGraph.pack(fill=BOTH)
+        self.cpuUsageGraph.show()
 
-    def generateLabel(self):
-        global textFrame
+
+    def generateLabel(self, textFrame):
         Label(textFrame, text="Global CPU information : \n", font='Helvetica 14 bold', justify=LEFT).pack()
 
-        global globalCPULabel
-        globalCPULabel = Label(textFrame, text=generateGlobalCPUText(), justify=LEFT)
-        globalCPULabel.pack(anchor='w')
+        self.globalCPULabel = Label(textFrame, text=generateGlobalCPUText(), justify=LEFT)
+        self.globalCPULabel.pack(anchor='w')
 
         Label(textFrame, text="Information Per CPU : \n", font='Helvetica 14 bold', justify=LEFT).pack()
         
-        global perCPULabel
         perCPULabel = Label(textFrame, text=generatePerCPUText(), justify=LEFT)
         perCPULabel.pack(anchor='w')
 
 
-
-
         
     def update(self, dt):
-        global globalCPULabel
-        global perCPULabel
-        globalCPULabel.config(text=generateGlobalCPUText())
-        perCPULabel.config(text=generatePerCPUText())
+        self.globalCPULabel.config(text=generateGlobalCPUText())
+        self.perCPULabel.config(text=generatePerCPUText())
+        self.cpuUsageGraph.add(psutil.cpu_percent(interval=0.5, percpu=False))
 
-        globalCPULabel.after(dt, self.update, dt) # every second...
+        self.globalCPULabel.after(1000, self.update, 1000) # every second...
 
 
 
