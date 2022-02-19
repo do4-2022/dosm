@@ -131,3 +131,6 @@ dmypy.json
 # misc
 /*/dev.py
 dev.py
+Pipfile
+Pipfile.lock
+logs/
