@@ -1,14 +1,17 @@
+from asyncio.log import logger
 from tkinter import *
 import psutil
 from integrator import frame as modelFrame
 from logger.level import LogLevel
 from logger.logger import Logger
-from CPU import graph
+from . import graph
+from .cpu_data.global_cpu import GlobalCPU
 
 class Tab (modelFrame.DOSMFrame):
 
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
+        self.cpu = GlobalCPU()
         self.globalCPULabel = Label()
         self.perCPULabel = Label()
         self.cpuUsageGraph = graph.LineGraph(self)
@@ -54,6 +57,8 @@ class Tab (modelFrame.DOSMFrame):
         self.globalCPULabel.config(text=generateGlobalCPUText())
         self.perCPULabel.config(text=generatePerCPUText())
         self.cpuUsageGraph.add(psutil.cpu_percent(interval=0.5, percpu=False))
+
+        logger
 
         self.globalCPULabel.after(1000, self.update, 1000) # every second...
 
