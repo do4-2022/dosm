@@ -8,12 +8,13 @@ from datetime import datetime
 
 class frame(frame.DOSMFrame):
     def __init__(self, master, logger: Logger, **options):
+        super().__init__(master, logger, **options)
         self.logger = logger
 
-        master.columnconfigure(0, weight=1)
-        master.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
 
-        master.title("Logged in users")
+        # master.title("Logged in users")
 
         # User columns name and heading text
         columns = {
@@ -24,19 +25,19 @@ class frame(frame.DOSMFrame):
         }
 
         self.datagrid = ttk.Treeview(
-            master, columns=list(columns.keys()), show='headings')
+            self, columns=list(columns.keys()), show='headings')
 
         # Set headings
         for column in columns.keys():
             self.datagrid.heading(column, text=columns[column])
 
-        self.datagrid.grid(row=0, column=0, sticky='nsew')
+        self.datagrid.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
         # Scrollbar
         scrollbar = ttk.Scrollbar(
-            master, orient=tk.VERTICAL, command=self.datagrid.yview)
+            self, orient=tk.VERTICAL, command=self.datagrid.yview)
         self.datagrid.configure(yscroll=scrollbar.set)
-        scrollbar.grid(row=0, column=1, sticky='ns')
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
     def show(self):
         self.update(0)
