@@ -13,23 +13,21 @@ import numpy as np
 class LineGraph(tk.Frame):
     def __init__(self, master, **options):
         super().__init__(master, **options)
-        self.listY = []
         self.fig = Figure(figsize=(2, 2), dpi=100)
         self.subplot = self.fig.add_subplot(111)
         self.subplot.set_ylim([0, 100])
 
     def show(self):
         
-        self.subplot.plot(self.listY)
+        self.subplot.plot([])
 
         canvas = FigureCanvasTkAgg(self.fig, master=self)  # A tk.DrawingArea.
         canvas.draw()
         canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-    def add(self, Y):
-        self.listY.append(Y)
+    def redraw(self, listY):
         self.subplot.clear()
-        self.subplot.plot(self.listY)
+        self.subplot.plot(listY)
 
     def hide(self):
         pass

@@ -12,3 +12,14 @@ class CPU ():
 
     def add_frequency(self, frequency):
         self.frequencies.append(frequency)
+
+
+    def generateDataTuples(self):
+        list = []
+
+        list.append(("\tCPU usage :",  f"{self.usages[-1]}%"))
+        list.append(("\tCPU frequency :",  f"{self.frequencies[-1]}MHz"))
+        list.append(("\tCPU min frequency :",  f"{self.min_frequency}MHz"))
+        list.append(("\tCPU max frequency :",  f"{self.max_frequency}MHz"))
+
+        return list
