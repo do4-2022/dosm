@@ -1,4 +1,3 @@
-from asyncio.log import logger
 from tkinter import *
 from tkinter import ttk
 
@@ -7,6 +6,8 @@ from logger.level import LogLevel
 from logger.logger import Logger
 from . import graph
 from .cpu_data.global_cpu import GlobalCPU
+
+import psutil
 
 class Tab (modelFrame.DOSMFrame):
 
