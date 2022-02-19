@@ -5,9 +5,6 @@ import psutil
 
 class GlobalCPU ():
 
-    instance = None
-
-
     def __init__(self):
 
         self.usages = []
