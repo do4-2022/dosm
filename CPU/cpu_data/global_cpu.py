@@ -57,8 +57,8 @@ class GlobalCPU ():
         list.extend(self.time.generateDataTuples())
         list.extend(self.stats.generateDataTuples())
 
+        list.append(("Per CPU data : ", ""))
         for i in range(0, self.number_of_logical_cpus) :
-            list.append(("Per CPU data : ", ""))
             list.append((f"  CPU n°{i+1} : ", ""))
             list.extend(self.cpu_list[i].generateDataTuples())
 
