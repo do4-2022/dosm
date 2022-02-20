@@ -7,8 +7,6 @@ from logger.logger import Logger
 from . import graph
 from .cpu_data.global_cpu import GlobalCPU
 
-import psutil
-
 class Tab (modelFrame.DOSMFrame):
 
     def __init__(self, master, logger: Logger, **options):
@@ -44,9 +42,7 @@ class Tab (modelFrame.DOSMFrame):
         self.fillTreeView()
         self.cpuUsageGraph.redraw(self.cpu.usages)
 
-        self.log()        
-
-        self.after(1000, self.update, 1000) # every second...
+        self.log()
 
 
     def log(self):
