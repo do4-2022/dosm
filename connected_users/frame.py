@@ -27,8 +27,8 @@ class frame(frame.DOSMFrame):
             self, columns=list(columns.keys()), show='headings')
 
         # Set datagrid headings
-        for column in columns.keys():
-            self.datagrid.heading(column, text=columns[column])
+        for (name, display_name) in columns.items():
+            self.datagrid.heading(name, text=display_name)
 
         self.datagrid.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
