@@ -5,7 +5,7 @@ from logger.logger import Logger
 from datetime import datetime
 
 
-class frame(frame.DOSMFrame):
+class Tab(frame.DOSMFrame):
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
         self.logger = logger
