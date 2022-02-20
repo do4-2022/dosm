@@ -9,8 +9,6 @@ from logger.logger import Logger
 from . import graph
 from .cpu_data.global_cpu import GlobalCPU
 
-import psutil
-
 class Tab (modelFrame.DOSMFrame):
 
     def __init__(self, master, logger: Logger, **options):
@@ -46,9 +44,20 @@ class Tab (modelFrame.DOSMFrame):
         self.fillTreeView()
         self.cpuUsageGraph.redraw(self.cpu.usages)
 
+        self.log()        
+
         self.after(1000, self.update, 1000) # every second...
 
 
+    def log(self):
+        if len(self.cpu.usages) >= 2:
+            if self.cpu.usages[-1] >= 75 and self.cpu.usages[-2] < 75:
+                self.logger.write_log(f"CPU global usage exceded 75% ({self.cpu.usages[-1]}%)", level=LogLevel.WARN)
+            elif self.cpu.usages[-1] >= 50 and self.cpu.usages[-2] < 50:
+                self.logger.write_log(f"CPU global usage exceded 50% ({self.cpu.usages[-1]}%)", level=LogLevel.INFO)
+            elif self.cpu.usages[-1] < 75 and self.cpu.usages[-2] >= 75:
+                self.logger.write_log(f"CPU global usage has gone under 75% ({self.cpu.usages[-1]}%)", level=LogLevel.INFO)
+        
 
     def generateTreeView(self, master):
         master.columnconfigure(0, weight=1)
