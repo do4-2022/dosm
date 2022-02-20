@@ -1,6 +1,5 @@
 import psutil as ps
 import tkinter as tk
-from tkinter import ttk
 from integrator import frame
 from logger.logger import Logger
 from datetime import datetime
@@ -14,9 +13,8 @@ class frame(frame.DOSMFrame):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
 
-        # master.title("Logged in users")
-
-        # User columns name and heading text
+    def show(self):
+        # Define datagrid headings
         columns = {
             "name": "Name",
             "host": "Host",
@@ -24,23 +22,21 @@ class frame(frame.DOSMFrame):
             "connexion_pid": "Connexion PID"
         }
 
-        self.datagrid = ttk.Treeview(
+        # Init datagrid
+        self.datagrid = tk.ttk.Treeview(
             self, columns=list(columns.keys()), show='headings')
 
-        # Set headings
+        # Set datagrid headings
         for column in columns.keys():
             self.datagrid.heading(column, text=columns[column])
 
         self.datagrid.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        # Scrollbar
-        scrollbar = ttk.Scrollbar(
+        # Init scrollbar
+        scrollbar = tk.ttk.Scrollbar(
             self, orient=tk.VERTICAL, command=self.datagrid.yview)
         self.datagrid.configure(yscroll=scrollbar.set)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
-    def show(self):
-        self.update(0)
 
     def update(self, dt):
         # Clear data grid
