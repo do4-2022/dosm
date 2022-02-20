@@ -47,7 +47,7 @@ class frame(frame.DOSMFrame):
         for user in ps.users():
             users.append(
                 (user.name, user.host, datetime.fromtimestamp(user.started), user.pid))
-            self.logger.write_log(users[len(users) - 1])
+            self.logger.write_log(users[-1])
 
         # Add data to datagrid
         for user in users:
