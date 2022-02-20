@@ -1,12 +1,14 @@
 from tkinter import *
 from home import mini_frame
-from CPU import graph
+from . import graph
+from .cpu_data.global_cpu import GlobalCPU
 import psutil
 
 
 class MiniFrame(mini_frame.MiniFrame):
     def __init__(self, master, logger, **options):
         super().__init__(master, logger, **options)
+        self.cpu = GlobalCPU()
         self.cpuUsageGraph = graph.LineGraph(self)
 
     def show(self):
@@ -15,4 +17,5 @@ class MiniFrame(mini_frame.MiniFrame):
         self.cpuUsageGraph.show()
 
     def update(self):
-        self.cpuUsageGraph.add(psutil.cpu_percent(interval=0.5, percpu=False))
+        self.cpu.update()
+        self.cpuUsageGraph.redraw(self.cpu.usages)
