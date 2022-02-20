@@ -15,9 +15,9 @@ class mini_frame(mini_frame.MiniFrame):
     def show(self):
         self.text = tk.StringVar()
 
-        label = tk.Label(self, textvariable=self.text)
+        self.label = tk.Label(self, textvariable=self.text)
 
-        label.pack(fill=tk.BOTH, expand=True)
+        self.label.pack(fill=tk.BOTH, expand=True)
 
     def update(self, dt):
         nb_connected_user = len(ps.users())
@@ -25,4 +25,5 @@ class mini_frame(mini_frame.MiniFrame):
         self.text.set(f"{nb_connected_user} connected " + ("user" if nb_connected_user < 2 else "users"))
 
     def hide(self):
-        pass
+        self.label.destroy()
+        self.text.destroy()

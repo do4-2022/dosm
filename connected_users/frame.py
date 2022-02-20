@@ -33,10 +33,10 @@ class Tab(frame.DOSMFrame):
         self.datagrid.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
         # Init scrollbar
-        scrollbar = tk.ttk.Scrollbar(
+        self.scrollbar = tk.ttk.Scrollbar(
             self, orient=tk.VERTICAL, command=self.datagrid.yview)
-        self.datagrid.configure(yscroll=scrollbar.set)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.datagrid.configure(yscroll=self.scrollbar.set)
+        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
     def update(self, dt):
         # Clear data grid
@@ -54,4 +54,5 @@ class Tab(frame.DOSMFrame):
             self.datagrid.insert('', tk.END, values=user)
 
     def hide(self):
-        pass
+        self.datagrid.destroy()
+        self.scrollbar.destroy()
