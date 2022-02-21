@@ -1,7 +1,7 @@
 import tkinter as tk
 
 
-class DOSMFrame(tk.Frame):
+class BaseFrame(tk.Frame):
     def __init__(self, master, logger, **options):
         self.logger = logger
         self.name = 'Integrator'

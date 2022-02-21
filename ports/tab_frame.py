@@ -3,7 +3,7 @@ import sys
 import tkinter as tk
 from tkinter import ttk
 
-from integrator import frame
+from integrator import base_frame
 from logger.level import LogLevel
 from logger.logger import Logger
 
@@ -13,7 +13,7 @@ COLUMNS = ("local port", "local addr", "remote addr", "remote port", "PID", "nam
 DATA_FIELDS = ("local_port", "local_addr", "remote_addr", "remote_port", "pid", "name", "status", "type")
 
 
-class Tab (frame.DOSMFrame):
+class TabFrame(base_frame.BaseFrame):
     """
     This frame is used to display the active network connexions, every update the status of all open ports is dumped as json
     """

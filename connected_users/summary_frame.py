@@ -1,10 +1,10 @@
 import psutil as ps
 import tkinter as tk
-from home import mini_frame
+from home import base_summary_frame
 from logger.logger import Logger
 
 
-class mini_frame(mini_frame.MiniFrame):
+class SummaryFrame(base_summary_frame.BaseSummaryFrame):
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
         self.logger = logger
