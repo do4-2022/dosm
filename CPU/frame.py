@@ -26,7 +26,7 @@ class Tab (modelFrame.DOSMFrame):
 
         # graph Frame
         graphFrame = Frame(self, width=100, height=10)
-        graphFrame.grid(row=0, column=2, sticky=N+S+E+W)
+        graphFrame.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
 
         #graph data
