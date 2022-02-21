@@ -1,3 +1,4 @@
+import asyncio
 import tkinter as tk
 from tkinter import ttk
 
@@ -16,17 +17,15 @@ class Tab (modelFrame.DOSMFrame):
         self.cpuUsageGraph = graph.LineGraph(self)
 
     def show(self):   
-        # Frame with one row and two columns
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(2, weight=1)
-        self.rowconfigure(0, weight=1)
 
         # data tree
-        self.generateTreeView(self)
+        dataFrame = tk.Frame(self)
+        dataFrame.pack(side=tk.LEFT, fill=tk.BOTH)
+        self.generateTreeView(dataFrame)
 
         # graph Frame
-        graphFrame = tk.Frame(self, width=100, height=10)
-        graphFrame.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+        graphFrame = tk.Frame(self, width=100, height=100)
+        graphFrame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
 
         #graph data
@@ -37,7 +36,7 @@ class Tab (modelFrame.DOSMFrame):
 
         
     def update(self, dt):
-        self.cpu.update()
+        asyncio.run(self.cpu.update())
         self.fillTreeView()
         self.cpuUsageGraph.redraw(self.cpu.usages)
 
@@ -55,9 +54,6 @@ class Tab (modelFrame.DOSMFrame):
         
 
     def generateTreeView(self, master):
-        master.columnconfigure(0, weight=1)
-        master.rowconfigure(1, weight=1)
-
         columns = ('category', 'value')
 
         self.dataTree = ttk.Treeview(master, columns=columns, show='headings')
@@ -67,13 +63,12 @@ class Tab (modelFrame.DOSMFrame):
         self.dataTree.heading('category', text='Category')
         self.dataTree.heading('value', text='Value')
       
-        self.dataTree.grid(row=0, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
-
         # add a scrollbar
         scrollbar = ttk.Scrollbar(master, orient=tk.VERTICAL, command=self.dataTree.yview)
         self.dataTree.configure(yscroll=scrollbar.set)
-        self.dataTree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.dataTree.pack(side=tk.LEFT, fill=tk.Y, expand=True)
 
 
     def fillTreeView(self):
