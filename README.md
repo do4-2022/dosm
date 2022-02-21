@@ -6,7 +6,7 @@ Currently integrated
 - [ ] disks
 - [x] home
 - [ ] last users
-- [ ] logged users
+- [x] logged users
 - [ ] memory
 - [ ] network
 - [x] ports

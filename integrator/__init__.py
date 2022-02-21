@@ -3,6 +3,7 @@ from tkinter import ttk
 from time import time
 
 from config import MIN_WINDOW_SIZE, UPDATE_INTERVAL
+from connected_users import tab_frame as cu_frame
 from home import tab_frame as home_frame
 from ports import tab_frame as ports_frame
 from logger import factory, logger
@@ -31,6 +32,7 @@ class Integrator:
         # Create the tabs
         self.tabs = [
             home_frame.TabFrame(self.notebook, logger.Logger('home', self.logger_factory)),
+            cu_frame.TabFrame(self.notebook, logger.Logger('connected_users', self.logger_factory)),
             ports_frame.TabFrame(self.notebook, logger.Logger('ports', self.logger_factory)),
         ]
 
