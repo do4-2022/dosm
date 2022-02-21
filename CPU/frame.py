@@ -25,13 +25,13 @@ class Tab (modelFrame.DOSMFrame):
         self.generateTreeView(self)
 
         # graph Frame
-        graphFrame = Frame(self, width=100, height=10)
+        graphFrame = tk.Frame(self, width=100, height=10)
         graphFrame.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
 
         #graph data
         self.cpuUsageGraph = graph.LineGraph(graphFrame,width=40, padx=40, pady=40)
-        self.cpuUsageGraph.pack(fill=BOTH)
+        self.cpuUsageGraph.pack(fill=tk.BOTH)
         self.cpuUsageGraph.show()
 
 
@@ -67,12 +67,12 @@ class Tab (modelFrame.DOSMFrame):
         self.dataTree.heading('category', text='Category')
         self.dataTree.heading('value', text='Value')
       
-        self.dataTree.grid(row=0, column=0, sticky=N+S+E+W)
+        self.dataTree.grid(row=0, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
 
         # add a scrollbar
-        scrollbar = ttk.Scrollbar(master, orient=VERTICAL, command=self.dataTree.yview)
+        scrollbar = ttk.Scrollbar(master, orient=tk.VERTICAL, command=self.dataTree.yview)
         self.dataTree.configure(yscroll=scrollbar.set)
-        scrollbar.grid(row=0, column=1, sticky=N+S)
+        scrollbar.grid(row=0, column=1, sticky=tk.N+tk.S)
 
 
     def fillTreeView(self):
@@ -82,6 +82,6 @@ class Tab (modelFrame.DOSMFrame):
 
         # fill it
         for element in self.cpu.generateDataTuples():
-            self.dataTree.insert('', END, values=element)
+            self.dataTree.insert('', tk.END, values=element)
 
         
