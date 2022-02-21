@@ -9,6 +9,7 @@ class Tab(frame.DOSMFrame):
 
     def __init__(self, master, logger, **options):
         self.pipes = {}
+        self.number_pipes = 0
         self.shared_memory = 0
         self.semaphores = 0
         Thread(None, self.pipe_thread).start()
@@ -17,8 +18,10 @@ class Tab(frame.DOSMFrame):
     def show(self):
         self.semaphore_label = tk.Label(self, text="")
         self.shared_memory_label = tk.Label(self, text="")
+        self.pipes_number_label = tk.Label(self, text="")
         self.semaphore_label.pack()
         self.shared_memory_label.pack()
+        self.pipes_number_label.pack()
         self.set = tk.ttk.Treeview(self)
         self.set.pack()
 
@@ -42,6 +45,7 @@ class Tab(frame.DOSMFrame):
         self.semaphores = utils.load_semaphores()
         self.semaphore_label["text"] = "Number of semaphores : {}".format(self.semaphores)
         self.shared_memory_label["text"] = "Total shared  memory usage : {} MB".format(self.shared_memory / 1000000)
+        self.pipes_number_label["text"] = "Total number of pipes : {}".format(self.number_pipes)
 
         if not self.working:
             self.working = True
@@ -61,7 +65,7 @@ class Tab(frame.DOSMFrame):
             pass
 
         self.working = True
-        self.pipes = utils.load_pipes()
+        (self.pipes, self.number_pipes) = utils.load_pipes()
         self.working = False
         threading.Timer(30, self.pipe_thread)
    
