@@ -28,4 +28,5 @@ def get_logins_list():
 
     return {"since": since, "entries": result}
 
-print(get_logins_list())
+if __name__ == "__main__":
+    print(get_logins_list())
