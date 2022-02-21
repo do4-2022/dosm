@@ -72,7 +72,8 @@ class Tab (modelFrame.DOSMFrame):
         # add a scrollbar
         scrollbar = ttk.Scrollbar(master, orient=tk.VERTICAL, command=self.dataTree.yview)
         self.dataTree.configure(yscroll=scrollbar.set)
-        scrollbar.grid(row=0, column=1, sticky=tk.N+tk.S)
+        self.dataTree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
 
     def fillTreeView(self):
