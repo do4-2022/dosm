@@ -45,7 +45,6 @@ class Tab (modelFrame.DOSMFrame):
 
         self.log()        
 
-        self.after(1000, self.update, 1000) # every second...
 
 
     def log(self):
