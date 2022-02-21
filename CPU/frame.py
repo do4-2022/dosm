@@ -23,7 +23,6 @@ class Tab (modelFrame.DOSMFrame):
 
         # data tree
         self.generateTreeView(self)
-        self.dataTree.grid(row=0, column=0, columnspan=1, sticky=N+S+E+W)
 
         # graph Frame
         graphFrame = Frame(self, width=100, height=10)
