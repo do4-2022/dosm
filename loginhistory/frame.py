@@ -1,3 +1,4 @@
+from datetime import datetime
 import tkinter as tk
 from tkinter import RIGHT, ttk
 from integrator import frame
@@ -11,7 +12,8 @@ class LoginHistoryFrame(frame.DOSMFrame):
 
         self.name = 'Login History'
         self.data = extractor.get_logins_list()
-        self.entries = []
+        self.sort_by = 'date'
+        self.sort_reverse = True
 
     def show(self):
 
@@ -28,6 +30,7 @@ class LoginHistoryFrame(frame.DOSMFrame):
         #Attach scrollbar to tree view
         self.tree_view.configure(yscrollcommand=self.scroll_bar.set)
 
+        #Create column entries
         for entry in table_columns:
             self.tree_view.heading(entry, text=entry)
 
@@ -37,16 +40,21 @@ class LoginHistoryFrame(frame.DOSMFrame):
         `dt` is the elapsed delta time since the last update in second
         """
 
+        #Update only if on screen
         if (self.shown):
             self.data = extractor.get_logins_list()
 
-            for entry in self.entries:
+            #Sort the data
+            self.data["entries"].sort(key=lambda entry: entry[self.sort_by], reverse=self.sort_reverse)
+
+            #Delete previous data
+            for entry in self.tree_view.get_children():
                 self.tree_view.delete(entry)
 
+            #Insert new data sorted
             for user in self.data["entries"]:
                 value = [val for val in user.values()]
-                entry = self.tree_view.insert('', 'end', values=value)
-                self.entries.append(entry)
+                self.tree_view.insert('', 'end', values=value)
         pass
 
     def hide(self):
@@ -56,5 +64,3 @@ class LoginHistoryFrame(frame.DOSMFrame):
         super.hide()
 
         pass
-
-    

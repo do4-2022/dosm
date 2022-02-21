@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import re
 
@@ -21,9 +22,9 @@ def get_logins_list():
             "user": entry[0:8],
             "tty": entry[9:21],
             "ip": entry[22:38],
-            "date": entry[39:62],
+            "date": datetime.strptime(entry[39:63], "%a %b %d %H:%M:%S %Y"),
             "state/loggedout": entry[66:91],
-            "uptime": entry[92:99]
+            "uptime": entry[92:99].replace('(','').replace(')', '').replace('+', 'd ')
         })
 
     return {"since": since, "entries": result}
