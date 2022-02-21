@@ -3,6 +3,7 @@ import subprocess
 def load_pipes():
     lsof = subprocess.Popen(["lsof", "-F", "ptc"], stdout=subprocess.PIPE)
     pipes = {}
+    pipes_number = 0
     for line in lsof.stdout.readlines():
         current_line = line.decode().strip('\n')
         if current_line[0] == 'p':
@@ -11,15 +12,14 @@ def load_pipes():
             process = current_line[1:]
         elif current_line.find('FIFO') != -1:
             number = pipes.get((pid, process))
+            pipes_number += 1
             if number == None:
                 pipes[(pid, process)] = 1
             else:
                 pipes[(pid, process)] = number + 1
 
-    return pipes
+    return (pipes, pipes_number)
 
-
-        
 def load_shared_memory():
     shared_memory = 0
     shm = subprocess.Popen(["ipcs", "-m"], stdout=subprocess.PIPE)
