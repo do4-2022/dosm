@@ -30,7 +30,6 @@ class LineGraph(tk.Frame):
         self.subplot.clear()
         self.subplot.set_ylim([0, 100])
         self.subplot.set_xticks([])
-        self.subplot.xaxis.set
         self.subplot.plot(listY)
         self.canvas.draw()
 
