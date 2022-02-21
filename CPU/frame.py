@@ -33,7 +33,7 @@ class Tab (modelFrame.DOSMFrame):
 
         #graph data
         self.cpuUsageGraph = graph.LineGraph(graphFrame,width=40, padx=40, pady=40)
-        self.cpuUsageGraph.pack(fill=BOTH)
+        self.cpuUsageGraph.pack(fill=tk.BOTH)
         self.cpuUsageGraph.show()
 
 
