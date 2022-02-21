@@ -76,7 +76,6 @@ class LoginHistoryFrame(frame.DOSMFrame):
         self.scroll_bar.destroy()
         super.hide()
 
-        pass
 
     #Handle sort when user click on columns
     def handle_sort(self, col):
