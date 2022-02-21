@@ -1,4 +1,3 @@
-from asyncio.log import logger
 from datetime import datetime
 import json
 import tkinter as tk
@@ -52,6 +51,10 @@ class LoginHistoryFrame(frame.DOSMFrame):
         if (self.shown):
             #Extract data and log it
             self.data = extractor.get_logins_list()
+            data_copy = self.data
+            for entry in data_copy["entries"]:
+                entry["date"] = datetime.strftime(entry["date"], "%a %b %d %H:%M:%S %Y")
+            self.logger.write_log(json.dumps(data_copy) ,level=LogLevel.INFO)
 
             #Sort the data
             self.data["entries"].sort(key=lambda entry: entry[self.sort_by], reverse=self.sort_reverse)
