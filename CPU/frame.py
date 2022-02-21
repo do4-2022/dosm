@@ -40,8 +40,7 @@ class Tab (modelFrame.DOSMFrame):
         self.fillTreeView()
         self.cpuUsageGraph.redraw(self.cpu.usages)
 
-        self.log()        
-        self.after(1000, self.update, 1000)
+        self.log()
 
 
     def log(self):
