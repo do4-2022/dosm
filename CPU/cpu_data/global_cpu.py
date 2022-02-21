@@ -29,7 +29,7 @@ class GlobalCPU ():
 
 
 
-    def update(self):
+    async def update(self):
         self.usages.append(psutil.cpu_percent(interval=0.5, percpu=False))
         self.frequencies.append(psutil.cpu_freq(percpu=False).current)
 
@@ -47,6 +47,7 @@ class GlobalCPU ():
 
 
     def generateDataTuples(self):
+
         list = []
         list.append(("Global CPU usage", f"{self.usages[-1]}%"))
         list.append(("Global CPU usage in the last min", f"{self.loads[-1]}%"))

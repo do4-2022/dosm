@@ -16,18 +16,23 @@ class LineGraph(tk.Frame):
         self.fig = Figure(figsize=(2, 2), dpi=100)
         self.subplot = self.fig.add_subplot(111)
         self.subplot.set_ylim([0, 100])
+        self.canvas = FigureCanvasTkAgg()
 
     def show(self):
         
         self.subplot.plot([])
 
-        canvas = FigureCanvasTkAgg(self.fig, master=self)  # A tk.DrawingArea.
-        canvas.draw()
-        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # A tk.DrawingArea.
+        self.canvas.draw()
+        self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
     def redraw(self, listY):
         self.subplot.clear()
+        self.subplot.set_ylim([0, 100])
+        self.subplot.set_xticks([])
+        self.subplot.xaxis.set
         self.subplot.plot(listY)
+        self.canvas.draw()
 
     def hide(self):
         pass
