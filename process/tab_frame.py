@@ -1,11 +1,7 @@
 import tkinter as tk
-from integrator import frame
+from integrator import base_frame
 
-class DOSMFrame(frame.DOSMFrame):
-    def __init__(self, master, logger, **options):
-        self.logger = logger
-        super().__init__(master, **options)
-
+class TabFrame(base_frame.BaseFrame):
     def show(self):
         pass
 

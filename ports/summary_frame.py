@@ -2,11 +2,11 @@
 from tkinter import StringVar
 from tkinter import ttk
 
-from home import mini_frame
+from home import base_summary_frame
 from ports import read
 
 
-class MiniFrame(mini_frame.MiniFrame):
+class SummaryFrame(base_summary_frame.BaseSummaryFrame):
     def __init__(self, master, logger, **options):
         super().__init__(master, logger, **options)
         self.portsCount = StringVar()

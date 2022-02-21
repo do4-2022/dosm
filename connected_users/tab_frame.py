@@ -1,11 +1,11 @@
 import psutil as ps
 import tkinter as tk
-from integrator import frame
+from integrator import base_frame
 from logger.logger import Logger
 from datetime import datetime
 
 
-class Tab(frame.DOSMFrame):
+class TabFrame(base_frame.BaseFrame):
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
         self.logger = logger
