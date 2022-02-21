@@ -5,7 +5,7 @@ from .cpu_data.global_cpu import GlobalCPU
 import psutil
 
 
-class MiniFrame(mini_frame.MiniFrame):
+class SummaryFrame(mini_frame.MiniFrame):
     def __init__(self, master, logger, **options):
         super().__init__(master, logger, **options)
         self.cpu = GlobalCPU()
