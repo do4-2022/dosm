@@ -8,7 +8,7 @@ from logger.logger import Logger
 from . import graph
 from .cpu_data.global_cpu import GlobalCPU
 
-class Tab (modelFrame.DOSMFrame):
+class TabFrame (modelFrame.DOSMFrame):
 
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
