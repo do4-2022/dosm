@@ -1,13 +1,17 @@
+from asyncio.log import logger
 from datetime import datetime
+import json
 import tkinter as tk
 from tkinter import RIGHT, ttk
 from integrator import frame
+from logger.level import LogLevel
+from logger.logger import Logger
 from loginhistory import extractor
 
 table_columns = ('user', 'tty', 'ip', 'date', 'state/loggedout', 'uptime')
 
 class LoginHistoryFrame(frame.DOSMFrame):
-    def __init__(self, master, logger, **options):
+    def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
 
         self.name = 'Login History'
@@ -32,8 +36,12 @@ class LoginHistoryFrame(frame.DOSMFrame):
 
         #Create column entries
         for entry in table_columns:
-            self.tree_view.heading(entry, text=entry)
+            self.tree_view.heading(entry, text=entry, command=lambda col=entry: self.handle_sort(col))
 
+        #Handle sort for default value
+        self.handle_sort(self.sort_by)
+
+        #Show window
         super().show()
     def update(self, dt):
         """
@@ -42,6 +50,7 @@ class LoginHistoryFrame(frame.DOSMFrame):
 
         #Update only if on screen
         if (self.shown):
+            #Extract data and log it
             self.data = extractor.get_logins_list()
 
             #Sort the data
@@ -59,8 +68,25 @@ class LoginHistoryFrame(frame.DOSMFrame):
 
     def hide(self):
 
+        #Destroy elements and hide window
         self.tree_view.destroy()
         self.scroll_bar.destroy()
         super.hide()
 
         pass
+
+    #Handle sort when user click on columns
+    def handle_sort(self, col):
+        #Reset previous sorted col
+        self.tree_view.heading(self.sort_by, text=self.sort_by)
+        #If previous was clicked reverse order, if another one was clicked reset order and change sorting value
+        if self.sort_by == col:
+            self.sort_reverse = not self.sort_reverse
+        else:
+            self.sort_by = col
+            self.sort_reverse = False
+        #Add text on sorted value
+        if(self.sort_reverse):
+            self.tree_view.heading(col, text=col + " (descending)")
+        else:
+            self.tree_view.heading(col, text=col + " (ascending)")
