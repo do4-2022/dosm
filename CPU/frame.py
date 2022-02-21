@@ -86,6 +86,6 @@ class Tab (modelFrame.DOSMFrame):
 
         # fill it
         for element in self.cpu.generateDataTuples():
-            self.dataTree.insert('', END, values=element)
+            self.dataTree.insert('', tk.END, values=element)
 
         
