@@ -5,7 +5,7 @@ Currently integrated
 - [ ] cpu
 - [ ] disks
 - [x] home
-- [ ] last users
+- [x] last users
 - [x] logged users
 - [ ] memory
 - [ ] network
