@@ -18,8 +18,8 @@ class CPUStats (): # Number of actions since boot
         # clear memory (keep only the "memory_limit" last ones)
         self.ctx_switches = self.ctx_switches[-self.memory_limit:]
         self.interrupts = self.interrupts[-self.memory_limit:]
-        self.soft_interrupts = self.soft_interrupts[-self.memory_limit]
-        self.syscalls = self.syscalls[-self.memory_limit]
+        self.soft_interrupts = self.soft_interrupts[-self.memory_limit:]
+        self.syscalls = self.syscalls[-self.memory_limit:]
         
 
     def generateDataTuples(self):

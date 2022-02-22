@@ -44,7 +44,7 @@ class GlobalCPU ():
         # clear memory (keep only the "memory_limit" last ones)
         self.usages = self.usages[-self.memory_limit:]
         self.frequencies = self.frequencies[-self.memory_limit:]
-        self.loads = self.loads[-self.memory_limit]
+        self.loads = self.loads[-self.memory_limit:]
 
 
 
