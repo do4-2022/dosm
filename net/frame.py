@@ -2,6 +2,7 @@ from integrator.frame import DOSMFrame
 from tkinter import *
 from tkinter import ttk
 import psutil
+import math
 
 class Tab(DOSMFrame):
     def __init__(self, master, logger, **options):
@@ -99,9 +100,14 @@ class Tab(DOSMFrame):
         self.if_counters = dict(psutil.net_io_counters(pernic=True, nowrap=True))
         self.if_counters.pop('lo')
 
-    def prettyPrintBytes(self, bytes_amount):
-        #TODO
-        sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
-        index = 0
-        amount = 0
-        return f"{amount} {sizes[index]}"
+    def prettyPrintBytes(self, size_bytes):
+        # bout de code pris depuis cette URL https://stackoverflow.com/questions/5194057/better-way-to-convert-file-sizes-in-python
+        # je vais au moins expliquer ce que fait la fonction ligne par ligne pour montrer que j'ai compris
+        if size_bytes == 0:
+            return "0 B"
+        size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+        i = int(math.floor(math.log(size_bytes, 1024)))  # On arrondit et convertit en entier l'arrondit de log(s, 1024)
+        # on prends un log base 1024 log(x, 1024) car à chaque fois que le nombre d'octets est mis au carré le résultat augmente de 1
+        p = math.pow(1024, i)  # donne le nombre de bytes d'une unité
+        s = round(size_bytes / p, 2) # conversion de B vers XB
+        return "%s %s" % (s, size_name[i])  # on renvoie une string avec le montant et l'unité aproppriée
