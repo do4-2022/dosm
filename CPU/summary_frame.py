@@ -16,7 +16,7 @@ class SummaryFrame(mini_frame.MiniFrame):
         self.cpuUsageGraph.show()
 
     def hide(self):
-        tk.pack_forget(self)
+        self.grid_forget()
 
     def update(self):
         self.cpu.update()
