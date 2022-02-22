@@ -1,14 +1,13 @@
-import asyncio
 import tkinter as tk
 from tkinter import ttk
 
-from integrator import frame as modelFrame
+from integrator import base_frame
 from logger.level import LogLevel
 from logger.logger import Logger
 from . import graph
 from .cpu_data.global_cpu import GlobalCPU
 
-class TabFrame (modelFrame.DOSMFrame):
+class TabFrame (base_frame.BaseFrame):
 
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
@@ -36,9 +35,10 @@ class TabFrame (modelFrame.DOSMFrame):
 
         
     def update(self, dt):
-        asyncio.run(self.cpu.update())
+        self.cpu.update()
         self.fillTreeView()
         self.cpuUsageGraph.redraw(self.cpu.usages)
+        self.after(1000, self.update, 1000)
 
         self.log()
 

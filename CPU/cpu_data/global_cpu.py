@@ -5,10 +5,8 @@ import psutil
 
 class GlobalCPU ():
 
-    instance = None
-
-
     def __init__(self):
+        self.memory_limit = 100
 
         self.usages = []
         self.frequencies = []
@@ -29,20 +27,27 @@ class GlobalCPU ():
 
 
 
-    async def update(self):
-        self.usages.append(psutil.cpu_percent(interval=0.5, percpu=False))
+    def update(self):
+        self.usages.append(psutil.cpu_percent(percpu=False))
         self.frequencies.append(psutil.cpu_freq(percpu=False).current)
+        self.loads.append(psutil.getloadavg()[0] / self.number_of_logical_cpus * 100)
 
-        usage_per_cpu = psutil.cpu_percent(interval=0.5, percpu=True)
+        usage_per_cpu = psutil.cpu_percent(percpu=True)
         freq_per_cpu = psutil.cpu_freq(percpu=True)
         for i in range(0, self.number_of_logical_cpus):
             self.cpu_list[i].add_usage(usage_per_cpu[i])
             self.cpu_list[i].add_frequency(freq_per_cpu[i].current)
             
-        self.loads.append(psutil.getloadavg()[0] / self.number_of_logical_cpus * 100)
-
         self.time.update(psutil.cpu_times())
         self.stats.update(psutil.cpu_stats())
+
+        # clear memory (keep only the "memory_limit" last ones)
+        self.usages = self.usages[-self.memory_limit:]
+        self.frequencies = self.frequencies[-self.memory_limit:]
+        self.loads = self.loads[-self.memory_limit]
+
+
+
 
 
 
@@ -67,3 +72,10 @@ class GlobalCPU ():
 
 
         
+        def setMemoryLimit(limit):
+            self.memory_limit = limit
+            for i in range(0,self.number_of_logical_cpus):
+                self.cpu_list[i].memory_limit = limit
+            self.stats.memory_limit = limit
+            self.time.memory_limit = limit
+            

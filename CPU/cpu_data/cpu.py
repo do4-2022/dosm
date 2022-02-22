@@ -2,6 +2,7 @@
 class CPU ():
 
     def __init__(self, min_freq, max_freq):
+        self.memory_limit = 100
         self.usages = []
         self.frequencies = []
         self.min_frequency = min_freq
@@ -9,9 +10,13 @@ class CPU ():
 
     def add_usage(self, usage):
         self.usages.append(usage)
+        # clear memory (keep only the "memory_limit" last ones)
+        self.usages = self.usages[-self.memory_limit:]
 
     def add_frequency(self, frequency):
         self.frequencies.append(frequency)
+        # clear memory (keep only the "memory_limit" last ones)
+        self.frequencies = self.frequencies[-self.memory_limit:]
 
 
     def generateDataTuples(self):

@@ -1,6 +1,7 @@
 class CPUTime (): # store spent time in specific mode for the cpu
 
     def __init__(self):
+        self.memory_limit = 100
 
         # time spent by cpu in specific mode ( in secondes )
         self.system = []
@@ -27,6 +28,18 @@ class CPUTime (): # store spent time in specific mode for the cpu
         self.steal.append(time.steal)
         self.guest.append(time.guest)
         self.guest_nice.append(time.guest_nice)
+
+        # clear memory (keep only the "memory_limit" last ones)
+        self.system = self.system[-self.memory_limit:]
+        self.idle = self.idle[-self.memory_limit:]
+        self.user = self.user[-self.memory_limit]
+        self.nice = self.nice[-self.memory_limit]
+        self.iowait = self.iowait[-self.memory_limit:]
+        self.irq = self.irq[-self.memory_limit:]
+        self.softirq = self.softirq[-self.memory_limit]
+        self.steal = self.steal[-self.memory_limit]
+        self.guest = self.guest[-self.memory_limit:]
+        self.guest_nice = self.guest_nice[-self.memory_limit:]
     
 
 
