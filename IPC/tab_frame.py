@@ -7,8 +7,10 @@ from threading import Thread
 class TabFrame(base_frame.BaseFrame):
     pipes_dict = {}
     number_of_pipes = 0
+    time_passed = 0
 
     def __init__(self, master, logger, **options):
+        self.logger = logger
         utils.Utils.init_pipes()
         super().__init__(master, logger, **options)
 
@@ -40,9 +42,19 @@ class TabFrame(base_frame.BaseFrame):
     def update(self, dt):
         if not utils.Utils.working:
             (self.pipes_dict, self.number_of_pipes) = utils.Utils.get_pipes()
+        self.time_passed += dt
+
+        semaphores_number = utils.Utils.load_semaphores()
+        shared_memory = utils.Utils.load_shared_memory()
+
+        if self.time_passed >= 60:
+            self.time_passed = 0
+            self.logger.write_log('Number of semaphores : {}'.format(self.number_of_semaphores))
+            self.logger.write_log('Shared memory : {} MB'.format(self.shared_memory / 1000000))
+            self.logger.write_log('Total number of pipes : {}'.format(self.number_of_pipes))
             
-        self.semaphore_label["text"] = "Number of semaphores : {}".format(utils.Utils.load_semaphores())
-        self.shared_memory_label["text"] = "Total shared  memory usage : {} MB".format(utils.Utils.load_shared_memory() / 1000000)
+        self.semaphore_label["text"] = "Number of semaphores : {}".format(semaphores_number)
+        self.shared_memory_label["text"] = "Total shared  memory usage : {} MB".format(shared_memory / 1000000)
         self.pipes_number_label["text"] = "Total number of pipes : {}".format(self.number_of_pipes)
 
         for index, ( (pid, process), value ) in enumerate(self.pipes_dict.items()):
@@ -51,5 +63,3 @@ class TabFrame(base_frame.BaseFrame):
             self.pipes.insert(parent='',index='end',iid=index, text='',
             values=(pid, process, value))
             
-    def hide(self):
-        pass

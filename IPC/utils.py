@@ -15,6 +15,7 @@ class Utils():
 
     def init_pipes():
         if not Utils.initialized:
+            Utils.initialized = True
             threading.Thread(None, Utils.update_pipes).start()
 
     def update_pipes():
