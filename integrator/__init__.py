@@ -3,9 +3,15 @@ from tkinter import ttk
 from time import time
 
 from config import MIN_WINDOW_SIZE, UPDATE_INTERVAL
+<<<<<<< HEAD
 from connected_users import tab_frame as cu_frame
 from home import tab_frame as home_frame
 from ports import tab_frame as ports_frame
+=======
+from home import frame as home_frame
+from ports import frame as ports_frame
+from process import frame as process_frame
+>>>>>>> feat(process): creation frame and colors
 from logger import factory, logger
 
 
