@@ -5,18 +5,19 @@ import re
 def get_logins_list():
     #Read the file needed to extract the data ans remove useless lines concerning system boot
     list = os.popen('last -F -d | sed \'/system boot/d\'').read()
-
     entries = list.split("\n")
-
     result = []
-
     since = ""
 
     for entry in entries:
-
         #Separate end lines showing the las update fron the other lines
         if(re.match(r"wtmp begins.*", entry)):
             since = entry[12:-1]
+            break
+        
+        #French users might have a different output
+        if(re.match(r"wtmp commence.*", entry)):
+            since = entry[14:-1]
             break
 
         #Handle entry lines, extract all columns and put it in a dictionary
