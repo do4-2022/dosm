@@ -1,8 +1,7 @@
-from tkinter import *
+from tkinter import tk
 from home import mini_frame
 from . import graph
 from .cpu_data.global_cpu import GlobalCPU
-import psutil
 
 
 class SummaryFrame(mini_frame.MiniFrame):
@@ -13,8 +12,11 @@ class SummaryFrame(mini_frame.MiniFrame):
 
     def show(self):
         self.cpuUsageGraph = graph.LineGraph(self,width=40, padx=40, pady=40)
-        self.cpuUsageGraph.pack(fill=BOTH)
+        self.cpuUsageGraph.pack(fill=tk.BOTH)
         self.cpuUsageGraph.show()
+
+    def hide(self):
+        tk.pack_forget(self)
 
     def update(self):
         self.cpu.update()

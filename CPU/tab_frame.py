@@ -32,7 +32,8 @@ class TabFrame (base_frame.BaseFrame):
         self.cpuUsageGraph.pack(fill=tk.BOTH)
         self.cpuUsageGraph.show()
 
-
+    def hide(self):
+        tk.pack_forget(self)
         
     def update(self, dt):
         self.cpu.update()
