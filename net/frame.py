@@ -127,7 +127,6 @@ class Tab(DOSMFrame):
 
         self.if_counters = dict(psutil.net_io_counters(pernic=True, nowrap=True))
         self.if_counters.pop('lo')
-        print(self.if_counters)
 
     def prettyPrintBytes(self, size_bytes):
         # bout de code pris depuis cette URL https://stackoverflow.com/questions/5194057/better-way-to-convert-file-sizes-in-python
