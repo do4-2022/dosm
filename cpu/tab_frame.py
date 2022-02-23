@@ -11,37 +11,45 @@ class TabFrame (base_frame.BaseFrame):
 
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
+        self.displayed = False
         self.cpu = GlobalCPU()
         self.dataTree = ttk.Treeview()
         self.cpuUsageGraph = graph.LineGraph(self)
+        self.dataFrame = tk.Frame(self)
+        self.graphFrame = tk.Frame(self)
 
-    def show(self):   
+    def show(self):
+        self.pack(fill=tk.BOTH)
 
         # data tree
-        dataFrame = tk.Frame(self)
-        dataFrame.pack(side=tk.LEFT, fill=tk.BOTH)
-        self.generateTreeView(dataFrame)
+        self.dataFrame = tk.Frame(self)
+        self.dataFrame.pack(side=tk.LEFT, fill=tk.BOTH)
+        self.generateTreeView(self.dataFrame)
 
         # graph Frame
-        graphFrame = tk.Frame(self, width=100, height=100)
-        graphFrame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-
+        self.graphFrame = tk.Frame(self, width=100, height=100)
+        self.graphFrame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         #graph data
-        self.cpuUsageGraph = graph.LineGraph(graphFrame,width=40, padx=40, pady=40)
+        self.cpuUsageGraph = graph.LineGraph(self.graphFrame,width=40, padx=40, pady=40)
         self.cpuUsageGraph.pack(fill=tk.BOTH)
         self.cpuUsageGraph.show()
 
     def hide(self):
         self.pack_forget()
+        self.dataFrame.destroy()
+        self.graphFrame.destroy()
+
         
     def update(self, dt):
         self.cpu.update()
-        self.fillTreeView()
-        self.cpuUsageGraph.redraw(self.cpu.usages)
-        self.after(1000, self.update, 1000)
-
         self.log()
+        if self.displayed:
+            self.fillTreeView()
+            self.cpuUsageGraph.redraw(self.cpu.usages)
+            self.after(1000, self.update, 1000)
+
+        
 
 
     def log(self):
