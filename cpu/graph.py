@@ -32,6 +32,3 @@ class LineGraph(tk.Frame):
         self.subplot.set_xticks([])
         self.subplot.plot(listY)
         self.canvas.draw()
-
-    def hide(self):
-        pass
