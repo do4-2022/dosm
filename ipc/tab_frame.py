@@ -1,6 +1,6 @@
 import threading
 import tkinter as tk
-from IPC import utils
+from ipc import utils
 from integrator import base_frame  
 from threading import Thread
 
@@ -38,6 +38,7 @@ class TabFrame(base_frame.BaseFrame):
 
             self.pipes.insert(parent='',index='end',iid=0,text='',
             values=('Loading','please wait'))
+            super().show()
 
 
     def update(self, dt):

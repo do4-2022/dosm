@@ -1,5 +1,5 @@
 import tkinter as tk
-from IPC import utils
+from ipc import utils
 from home import tab_frame
 
 class SummaryFrame(tab_frame.BaseSummaryFrame):
