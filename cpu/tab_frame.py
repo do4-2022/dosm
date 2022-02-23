@@ -47,7 +47,6 @@ class TabFrame (base_frame.BaseFrame):
         if self.displayed:
             self.fillTreeView()
             self.cpuUsageGraph.redraw(self.cpu.usages)
-            self.after(1000, self.update, 1000)
 
         
 
