@@ -8,16 +8,19 @@ class Utils():
     working = False
     initialized = False
 
+    @staticmethod
     def get_pipes():
         while Utils.working:
             pass
         return (Utils.pipes, Utils.pipes_number)
 
+    @staticmethod
     def init_pipes():
         if not Utils.initialized:
             Utils.initialized = True
             threading.Thread(None, Utils.update_pipes).start()
 
+    @staticmethod
     def update_pipes():
         lsof = subprocess.Popen(["lsof", "-F", "ptc"], stdout=subprocess.PIPE)
         while Utils.working:
@@ -44,6 +47,7 @@ class Utils():
         Utils.working = False
         threading.Timer(30, Utils.update_pipes)
 
+    @staticmethod
     def load_shared_memory():
         shared_memory = 0
         shm = subprocess.Popen(["ipcs", "-m"], stdout=subprocess.PIPE)
@@ -54,6 +58,7 @@ class Utils():
                 shared_memory += int(decoded)
         return shared_memory
 
+    @staticmethod
     def load_semaphores():
         semaphores = 0
         shm = subprocess.Popen(["ipcs", "-sc"], stdout=subprocess.PIPE)
