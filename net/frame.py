@@ -11,7 +11,7 @@ import psutil
 import math
 
 
-class Tab(DOSMFrame):
+class Tab(DOSMFrame.BaseFrame):
     def __init__(self, master, logger, **options):
         super(Tab, self).__init__(master, logger, **options)
 
@@ -86,33 +86,41 @@ class Tab(DOSMFrame):
         self.updateValues()
 
     def update(self, dt):
+
+        if self.selected is None:
+            return
+
         self.updateValues()
-        self.logger.write_log(json.dumps(self.if_counters))
+
+        if self.logger is not None:
+            self.logger.write_log(json.dumps(self.if_counters))
+
+        BSent = self.if_counters.get(self.selected).__getattribute__('bytes_sent')
+        BRecv = self.if_counters.get(self.selected).__getattribute__('bytes_recv')
+
+        self.varAddress.set(str(self.getIpAddress(self.selected)))
+        self.varStats.set(str(self.getStats(self.selected)))
+
+        self.varTotSent.set(f"Total : {self.prettyPrintBytes(BSent)} sent")
+        self.statSent.set(f"Errors : {self.if_counters.get(self.selected).__getattribute__('errout')}\n" \
+                          + f"Packet drop : {self.if_counters.get(self.selected).__getattribute__('dropout')}")
+
+        self.varTotRecv.set(f"Total : {self.prettyPrintBytes(BRecv)} received")
+        self.statRecv.set(f"Errors : {self.if_counters.get(self.selected).__getattribute__('errin')}\n" \
+                          + f"Packet drop : {self.if_counters.get(self.selected).__getattribute__('dropin')}")
+
+        # actual total - previous total
+        self.currentSent.set(f"Sent {self.prettyPrintBytes(BSent - self.former_if_counters.get(self.selected).__getattribute__('bytes_sent'))}")
+        self.currentRecv.set(f"Received {self.prettyPrintBytes(BRecv - self.former_if_counters.get(self.selected).__getattribute__('bytes_recv'))}")
 
     def hide(self):
         return super().hide()
 
     def changeSelected(self, event):
         if event:
-            self.updateValues()
             self.selected = event.widget.get()
-            BSent = self.if_counters.get(self.selected).__getattribute__('bytes_sent')
-            BRecv = self.if_counters.get(self.selected).__getattribute__('bytes_recv')
+            self.update(0)
 
-            self.varAddress.set(str(self.getIpAddress(self.selected)))
-            self.varStats.set(str(self.getStats(self.selected)))
-
-            self.varTotSent.set(f"Total : {self.prettyPrintBytes(BSent)} sent")
-            self.statSent.set(f"Errors : {self.if_counters.get(self.selected).__getattribute__('errout')}\n"\
-            + f"Packet drop : {self.if_counters.get(self.selected).__getattribute__('dropout')}")
-
-            self.varTotRecv.set(f"Total : {self.prettyPrintBytes(BRecv)} received")
-            self.statRecv.set(f"Errors : {self.if_counters.get(self.selected).__getattribute__('errin')}\n"\
-            + f"Packet drop : {self.if_counters.get(self.selected).__getattribute__('dropin')}")
-
-            # actual total - previous total
-            self.currentSent.set(f"Sent {self.prettyPrintBytes(BSent - self.former_if_counters.get(self.selected).__getattribute__('bytes_sent'))}")
-            self.currentRecv.set(f"Received {self.prettyPrintBytes(BRecv - self.former_if_counters.get(self.selected).__getattribute__('bytes_recv'))}")
 
 
     def getIpAddress(self, interface):
