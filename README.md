@@ -93,7 +93,7 @@ git merge <branch-name>
 
 See conventionnals commits here : https://www.conventionalcommits.org/en/v1.0.0-beta.2/
 
-### Logger
+## Logger
 
 One of us have implemented a Logger class to store debug messages.
 
@@ -108,17 +108,30 @@ Here is a classical example to test you're frame.
 ```python
 # import tkinter (as tk is optional) and your frame
 import tkinter as tk
-from your_package import frame
+import time
+from logger import logger, factory
+from your_package import tab_frame
+
+def update(window, frame, last_time):
+   new_time = time.time()
+   frame.update(new_time - last_time)
+   window.after(1000, update, window, frame, new_time)
 
 # create a new window
 window = tk.Tk()
 
-# create a new frame from your custom class
-a_frame_instance = frame.YouFrame(window, None)
-a_frame_instance.pack()
+# create a new logger
+logger_instance = logger.Logger('your_package', factory.LoggerFactory())
+
+# create a new frame from your custom TabFrame class
+frame_instance = tab_frame.TabFrame(window, logger_instance)
+frame_instance.pack(fill=tk.BOTH, expand=True)
 
 # if you want you can test your frame methods like this
-a_frame_instance.show() # for example
+frame_instance.show()
+
+# call update periodically
+window.after(1000, update, window, frame_instance, time.time())
 
 # run in event-driven mode. This line is blocking since the window is opened
 window.mainloop()
