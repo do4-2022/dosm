@@ -5,6 +5,7 @@ Currently integrated
 - [x] cpu
 - [ ] disks
 - [x] home
+- [x] ipc
 - [x] last users
 - [x] logged users
 - [ ] memory
