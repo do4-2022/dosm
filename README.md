@@ -13,32 +13,77 @@ Currently integrated
 - [x] ports
 - [x] process
 
+## Requirements
+
+You need [Python 3](https://www.python.org/downloads/) and a GNU/Linux based OS to run this project.
+
+All Python modules needed are [Tkinter](https://docs.python.org/fr/3/library/tkinter.html) and the ones listed in requirements.txt.
+
+## Run locally
+
+First clone this repository.
+
+```bash
+git clone git@github.com:do3-2021/dosm.git
+```
+or
+```bash
+git clone https://github.com/do3-2021/dosm.git
+```
+
+Then install requirements.
+
+```bash
+cd dosm
+pythons3 -m pip install -r requirements.txt
+```
+
+Finally run the project.
+```bash
+./main.py
+```
+or
+```bash
+python3 main.py
+```
+
 ## Worflow
 
-Each person will work on his module. Everyone have to implements a package derived from the main frame. Those methods will be written in `./integrator/frame.py`.
+Each person has worked on one module. Everyone had to implements a package derived from the base frame: `./integrator/base_frame.py`.
 
-** Works on our feature : **
-1. Create a branch with the name : `module-functionnality` and move into :
-```
-   git branch <branch-name>
-   git checkout <branch-name>
-```
-1. Create the 2 files `__init__.py` and `frame.py`
-1. See your modifications in your `dev.py` file. This file will be ignore by commits
+**Works on a feature :**
 
-**Pushing your works**  
+1. Create a branch with the name following the convention `module-functionnality` and checkout it.
+
+```bash
+git branch <branch-name>
+git checkout <branch-name>
+```
+
+2. Create a new Python package with at least these files
+   - `__init__.py`: used to mark a folder as Python package.
+   - `summary_frame.py`: contains a SummarFrame class which will be displayed in home tab.
+   - `tab_frame.py`: contains a TabFrame class which will be displayed as an independant tab in the window.
+
+3. Test your modifications in a `dev.py` file that you can create at the root of this project. This file will be ignored by git.
+
+**Pushing your works**
+
 When you're done with your work, here are the step to push.
+
 ```bash
 git fetch
-git rebase origin/main #Get the last modifications from the main, 
+git rebase origin/main 
 ```
 
-If there are conflicts, check the file and fix the MC. Then continue the process until the rebase is completely done.
+If there are conflicts, check the file and fix the merge conflicts. Then continue the process until the rebase is completely done.
+
 ```bash
-git rebase continue
+git rebase --continue
 ```
 
 Finally, save and push your work.
+
 ```bash
 git add .
 git commit -m "any modification done" # Describe here what you have done
@@ -50,17 +95,9 @@ See conventionnals commits here : https://www.conventionalcommits.org/en/v1.0.0-
 
 ### Logger
 
-We will have two ways to communicate with the Logger :
-- Metrics : Send a dictionnary / key->value object by the name of the metrics and the value. Te logger will retrieve the timestamp and write it on hi sown
-Example : Chrome is consumming 54% CPU : ["cpu.chrome"][.54]
+One of us have implemented a Logger class to store debug messages.
 
-- Logs : Send a string with the name of the modul and the message
-
-Methods :
-- writeMetric
-- readMetric
-- readLog
-- writeLog
+A new logger is created for each `TabFrame`. These one can use their logger with `self.write_log(message)`.
 
 ## Testing
 
