@@ -1,6 +1,6 @@
 import time
 
-from net import frame
+from net import tab_frame
 import math
 import psutil
 from home import base_summary_frame
@@ -8,7 +8,7 @@ from tkinter import ttk
 from tkinter import *
 
 
-class MiniFrame(frame.Tab, base_summary_frame.BaseSummaryFrame):
+class SummaryFrame(tab_frame.TabFrame, base_summary_frame.BaseSummaryFrame):
     def __init__(self, master, logger, **options):
         super().__init__(master, logger, **options)
 

@@ -8,6 +8,7 @@ from cpu import tab_frame as cpu_frame
 from home import tab_frame as home_frame
 from ipc import tab_frame as ipc_frame
 from login_history import tab_frame as lh_frame
+from net import tab_frame as net_frame
 from ports import tab_frame as ports_frame
 from process import tab_frame as process_frame
 from logger import factory, logger
@@ -40,6 +41,7 @@ class Integrator:
             cu_frame.TabFrame(self.notebook, logger.Logger('connected_users', self.logger_factory)),
             cpu_frame.TabFrame(self.notebook, logger.Logger('cpu', self.logger_factory)),
             lh_frame.TabFrame(self.notebook, logger.Logger('login_history', self.logger_factory)),
+            net_frame.TabFrame(self.notebook, logger.Logger('net', self.logger_factory)),
             ports_frame.TabFrame(self.notebook, logger.Logger('ports', self.logger_factory)),
             process_frame.TabFrame(self.notebook, logger.Logger('process', self.logger_factory)),
         ]

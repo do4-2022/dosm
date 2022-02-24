@@ -9,7 +9,7 @@ Currently integrated
 - [x] last users
 - [x] logged users
 - [ ] memory
-- [ ] network
+- [x] network
 - [x] ports
 - [x] process
 
