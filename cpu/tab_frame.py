@@ -11,6 +11,7 @@ class TabFrame (base_frame.BaseFrame):
 
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
+        self.name = "CPU"
         self.cpu = GlobalCPU()
         self.dataTree = ttk.Treeview()
         self.cpuUsageGraph = graph.LineGraph(self)
