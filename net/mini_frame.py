@@ -16,8 +16,6 @@ class MiniFrame(frame.Tab, base_summary_frame.BaseSummaryFrame):
 
     def show(self):
         self.update(0)
-        time.sleep(1)
-        self.update(0)
 
 
         iconrecv = ttk.Label(self, justify="center", text="🡇")
