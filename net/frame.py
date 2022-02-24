@@ -1,8 +1,6 @@
 import json
 
 from integrator import base_frame as DOSMFrame
-from logger.logger import Logger
-from logger.level import LogLevel
 
 from tkinter import *
 from tkinter import ttk
@@ -65,7 +63,7 @@ class Tab(DOSMFrame.BaseFrame):
         stats = ttk.Label(self, justify="center", textvariable=self.varStats)
         stats.grid(row=4, column=0)
 
-        iconrecv = ttk.Label(self, justify="center", text="🡇")
+        iconrecv = ttk.Label(self, justify="center", text="Download")
         iconrecv.grid(row=0, column=1)
         currentRecv = ttk.Label(self, justify="center", textvariable=self.currentRecv)
         currentRecv.grid(row=1, column=1)
@@ -74,7 +72,7 @@ class Tab(DOSMFrame.BaseFrame):
         statsrecv = ttk.Label(self, justify="center", textvariable=self.statRecv)
         statsrecv.grid(row=3, column=1)
 
-        iconsent = ttk.Label(self, justify="center", text="🡅")
+        iconsent = ttk.Label(self, justify="center", text="Upload")
         iconsent.grid(row=0, column=2)
         currentSent = ttk.Label(self, justify="center", textvariable=self.currentSent)
         currentSent.grid(row=1, column=2)
@@ -112,9 +110,6 @@ class Tab(DOSMFrame.BaseFrame):
         # actual total - previous total
         self.currentSent.set(f"Sent {self.prettyPrintBytes(BSent - self.former_if_counters.get(self.selected).__getattribute__('bytes_sent'))}")
         self.currentRecv.set(f"Received {self.prettyPrintBytes(BRecv - self.former_if_counters.get(self.selected).__getattribute__('bytes_recv'))}")
-
-    def hide(self):
-        return super().hide()
 
     def changeSelected(self, event):
         if event:
