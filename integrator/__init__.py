@@ -5,6 +5,7 @@ from time import time
 from config import MIN_WINDOW_SIZE, UPDATE_INTERVAL
 from connected_users import tab_frame as cu_frame
 from home import tab_frame as home_frame
+from ipc import tab_frame as ipc_frame
 from login_history import tab_frame as lh_frame
 from ports import tab_frame as ports_frame
 from process import tab_frame as process_frame
@@ -34,6 +35,7 @@ class Integrator:
         # Create the tabs
         self.tabs = [
             home_frame.TabFrame(self.notebook, logger.Logger('home', self.logger_factory)),
+            ipc_frame.TabFrame(self.notebook, logger.Logger('ipc', self.logger_factory)),
             cu_frame.TabFrame(self.notebook, logger.Logger('connected_users', self.logger_factory)),
             lh_frame.TabFrame(self.notebook, logger.Logger('login_history', self.logger_factory)),
             ports_frame.TabFrame(self.notebook, logger.Logger('ports', self.logger_factory)),
