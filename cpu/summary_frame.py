@@ -14,9 +14,11 @@ class SummaryFrame(mini_frame.MiniFrame):
         self.cpuUsageGraph = graph.LineGraph(self,width=40, padx=40, pady=40)
         self.cpuUsageGraph.pack(fill=tk.BOTH)
         self.cpuUsageGraph.show()
+        super.show()
 
     def hide(self):
-        self.grid_forget()
+        self.cpuUsageGraph.destroy()
+        super.hide()
 
     def update(self):
         self.cpu.update()

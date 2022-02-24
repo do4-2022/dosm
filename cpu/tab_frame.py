@@ -11,7 +11,6 @@ class TabFrame (base_frame.BaseFrame):
 
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
-        self.displayed = False
         self.cpu = GlobalCPU()
         self.dataTree = ttk.Treeview()
         self.cpuUsageGraph = graph.LineGraph(self)
@@ -19,7 +18,6 @@ class TabFrame (base_frame.BaseFrame):
         self.graphFrame = tk.Frame(self)
 
     def show(self):
-        self.pack(fill=tk.BOTH)
 
         # data tree
         self.dataFrame = tk.Frame(self)
@@ -35,16 +33,18 @@ class TabFrame (base_frame.BaseFrame):
         self.cpuUsageGraph.pack(fill=tk.BOTH)
         self.cpuUsageGraph.show()
 
+        super.show()
+
     def hide(self):
-        self.pack_forget()
         self.dataFrame.destroy()
         self.graphFrame.destroy()
+        super.hide()
 
         
     def update(self, dt):
         self.cpu.update()
         self.log()
-        if self.displayed:
+        if self.shown:
             self.fillTreeView()
             self.cpuUsageGraph.redraw(self.cpu.usages)
 
