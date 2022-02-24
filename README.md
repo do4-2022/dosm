@@ -2,15 +2,16 @@
 DOSM DevOps System Monitor (Not to be confused with BDSM) is a system monitoring tool writtent in python that tracks various system informations (CPU usage, Disk Usage etc..)
 
 Currently integrated
-- [ ] cpu
+- [x] cpu
 - [ ] disks
 - [x] home
+- [x] ipc
 - [x] last users
 - [x] logged users
 - [ ] memory
 - [ ] network
 - [x] ports
-- [ ] process
+- [x] process
 
 ## Worflow
 
