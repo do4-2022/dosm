@@ -9,11 +9,11 @@ import psutil
 import math
 
 
-class Tab(DOSMFrame.BaseFrame):
+class TabFrame(DOSMFrame.BaseFrame):
     def __init__(self, master, logger, **options):
-        super(Tab, self).__init__(master, logger, **options)
+        super().__init__(master, logger, **options)
 
-        self.logger = logger
+        self.name = 'Network'
 
         self.interfaces = psutil.net_if_addrs()
         self.interfaces.pop('lo')
