@@ -32,6 +32,7 @@ class TabFrame (base_frame.BaseFrame):
         self.xList = [0]
         self.yList = [100-psutil.virtual_memory().available * 100 / psutil.virtual_memory().total]
         self.name = "Memory"
+        
 
         
 
@@ -43,14 +44,16 @@ class TabFrame (base_frame.BaseFrame):
         self.totalRam.pack(pady=10,padx=10)
         self.frame.grid_rowconfigure(0, weight=1)
         self.frame.grid_columnconfigure(0, weight=1)
-        self.graphFrame = Graph(self.frame, self.figure)
-        self.graphFrame.grid(row=0, column=0, sticky="nsew")
-        self.graphFrame.tkraise()    
         
-        # graph Frame
-        self.graphFrame = tk.Frame(self)
-        self.graphFrame.pack()
+        self.graphFrame = Graph(self.frame, self.figure)
+        self.graphFrame.tkraise()    
 
+        
+        self.ramUsagePercent = tk.Label(self, text="Used %", font=LARGE_FONT)
+        self.ramUsagePercent.pack(pady=10,padx=10)
+
+        self.ramUsageGB = tk.Label(self, text="Used GB", font=LARGE_FONT)
+        self.ramUsageGB.pack(pady=10,padx=10)
         super().show()
 
     def hide(self):
@@ -60,22 +63,27 @@ class TabFrame (base_frame.BaseFrame):
 
         
     def update(self, dt):
+        if self.shown:
             self.yList.append(100-round(psutil.virtual_memory().available * 100 / psutil.virtual_memory().total))
             self.xList.append(self.xList[len(self.xList)-1]+1)
-            self.xList= self.xList[-100:]
-            self.yList= self.yList[-100:]
+            print(self.yList)
+            self.xList= self.xList[-50:]
+            self.yList= self.yList[-50:]
             self.subplot.clear()
             self.subplot.get_xaxis().set_visible(False)
             self.subplot.set_ylim([0, 100])
             self.subplot.plot(self.xList, self.yList)
+            self.graphFrame.canvas.draw()
+            self.ramUsagePercent.config(text=(str(100-round((psutil.virtual_memory().available * 100 / psutil.virtual_memory().total),1))+'% used'))
+            self.ramUsageGB.config(text=(str(round((psutil.virtual_memory().total-psutil.virtual_memory().available)/1000000000,1))+'GB/'+
+            str(round((psutil.virtual_memory().total/1000000000),1))+"GB"))
             
 class Graph(tk.Frame):
 
     def __init__(self, parent, f):
         tk.Frame.__init__(self, parent)
-        
-        canvas = FigureCanvasTkAgg(f, self)
-        canvas.draw()
-        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
-        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        self.canvas = FigureCanvasTkAgg(f, parent)
+        self.canvas.draw()
+        self.canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+        self.canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
         
