@@ -31,10 +31,7 @@ class TabFrame (base_frame.BaseFrame):
         self.subplot = self.figure.add_subplot(111)
         self.xList = [0]
         self.yList = [100-psutil.virtual_memory().available * 100 / psutil.virtual_memory().total]
-        self.name = "Memory"
-        
-
-        
+        self.name = "Memory" 
 
     def show(self):
 
@@ -58,6 +55,8 @@ class TabFrame (base_frame.BaseFrame):
 
     def hide(self):
         self.totalRam.destroy()
+        self.ramUsageGB.destroy()
+        self.ramUsagePercent.destroy()
         self.frame.destroy()
         super().hide()
 
@@ -66,7 +65,6 @@ class TabFrame (base_frame.BaseFrame):
         if self.shown:
             self.yList.append(100-round(psutil.virtual_memory().available * 100 / psutil.virtual_memory().total))
             self.xList.append(self.xList[len(self.xList)-1]+1)
-            print(self.yList)
             self.xList= self.xList[-50:]
             self.yList= self.yList[-50:]
             self.subplot.clear()
