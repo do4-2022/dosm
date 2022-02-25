@@ -15,15 +15,15 @@ def show_files(path):
   PATH is the path to the root folder of dosm
   """
 
-  path = f"%s/logs" % click.format_filename(path)
+  path = f"{click.format_filename(path)}/logs"
   onlyfiles = [f for f in listdir(path) if isfile(join(path, f))]
   onlylogs = [f for f in onlyfiles if f.endswith('.log')]
   onlylogs.sort()
 
   click.echo()
   for f in onlylogs:
-    size = getsize(f"%s/%s" % (path, f))
-    click.echo(f"  ├ %s (%s)" % (f, format_bytes(size)))
+    size = getsize(f"{path}/{f}")
+    click.echo(f"  ├ {f} ({format_bytes(size)})")
   click.echo()
 
 def format_bytes(size):
@@ -33,4 +33,4 @@ def format_bytes(size):
     while size > power:
         size /= power
         n += 1
-    return f"%d%s" % (size, power_labels[n]+'B')
+    return f"{size}{power_labels[n]+'B'}"
