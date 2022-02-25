@@ -1,4 +1,6 @@
 import tkinter as tk
+
+from PIL import Image, ImageTk
 from tkinter import ttk
 from time import time
 
@@ -26,6 +28,10 @@ class Integrator:
         self.window = tk.Tk()
         self.window.title('DOSM')
         self.window.minsize(*MIN_WINDOW_SIZE)
+
+        image = Image.open('images/icon.png')
+        photo = ImageTk.PhotoImage(image)
+        self.window.wm_iconphoto(False, photo)
 
         # Create the notebook to display tabs
         self.notebook = ttk.Notebook(self.window)
