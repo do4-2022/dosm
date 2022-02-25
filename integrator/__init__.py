@@ -12,6 +12,7 @@ from net import tab_frame as net_frame
 from ports import tab_frame as ports_frame
 from process import tab_frame as process_frame
 from logger import factory, logger
+from memory import tab_frame as memory_frame
 
 
 class Integrator:
@@ -44,6 +45,8 @@ class Integrator:
             net_frame.TabFrame(self.notebook, logger.Logger('net', self.logger_factory)),
             ports_frame.TabFrame(self.notebook, logger.Logger('ports', self.logger_factory)),
             process_frame.TabFrame(self.notebook, logger.Logger('process', self.logger_factory)),
+            memory_frame.TabFrame(self.notebook, logger.Logger('memory', self.logger_factory)),
+            
         ]
 
         for tab in self.tabs:
