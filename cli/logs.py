@@ -20,6 +20,9 @@ def show_files(path):
   path = f"{click.format_filename(path)}/logs"
   files = getFileList(path)
 
+  if len(files) == 0:
+    click.echo("No logs files found")
+    return
   # print the list of files with their size
   click.echo()
   for f in files:
