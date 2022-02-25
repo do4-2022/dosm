@@ -1,7 +1,7 @@
 from os import listdir
 from os.path import isfile, join, getsize
 
-def getFileList(path):
+def get_file_list(path):
   try:
     onlyfiles = [f for f in listdir(path) if isfile(join(path, f))]
     onlylogs = [f for f in onlyfiles if f.endswith('.log')]

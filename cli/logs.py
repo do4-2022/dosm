@@ -1,6 +1,6 @@
 from os import listdir
 from os.path import isfile, join, getsize
-from utils import getFileList, format_bytes
+from utils import get_file_list, format_bytes
 from re import compile, match
 from datetime import date, datetime
 import click
@@ -20,7 +20,7 @@ def show_files(path):
 
   # get list of files
   path = f"{click.format_filename(path)}/logs"
-  files = getFileList(path)
+  files = get_file_list(path)
 
   if len(files) == 0:
     click.echo("No logs files found")
@@ -50,7 +50,7 @@ def get(path, start, end, level):
 
   # get list of files
   path = f"{click.format_filename(path)}/logs"
-  files = getFileList(path)
+  files = get_file_list(path)
 
   if len(files) == 0:
     click.echo("No logs found")
