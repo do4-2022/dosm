@@ -1,3 +1,4 @@
+import json
 from home import base_summary_frame
 from datetime import datetime
 import tkinter as tk
@@ -18,10 +19,21 @@ class SummaryFrame(base_summary_frame.BaseSummaryFrame):
         self.name = 'Login History'
         self.data = []
         self.sort_by = 'date'
-        self.sort_reverse = True
+        self.sort_reverse = False
         self.waiting_label = None
         self.tree_view = None
         self.scroll_bar = None
+
+    def update_tree_view(self):
+        if(self.tree_view):
+            #Delete previous data
+            for entry in self.tree_view.get_children():
+                self.tree_view.delete(entry)
+
+            #Insert new data sorted
+            for user in self.data["entries"]:
+                value = [val for val in user.values()]
+                self.tree_view.insert('', 'end', values=value)
 
     def show(self):
         #Create a waiting label
@@ -58,25 +70,16 @@ class SummaryFrame(base_summary_frame.BaseSummaryFrame):
             for entry in TABLE_COLUMNS:
                 self.tree_view.heading(entry, text=entry, command=lambda col=entry: self.handle_sort(col))
 
-            #Handle sort for default value
-            self.handle_sort(self.sort_by)
-
             #Format date
             self.data = data
             for entry in self.data["entries"]:
                 entry["date"] = datetime.strftime(entry["date"], "%a %b %d %H:%M:%S %Y")
+            
+            #Log the data
+            self.logger.write_log(json.dumps(self.data) ,level=LogLevel.INFO)
 
-            #Sort the data
-            self.data["entries"].sort(key=lambda entry: entry[self.sort_by], reverse=self.sort_reverse)
-
-            #Delete previous data
-            for entry in self.tree_view.get_children():
-                self.tree_view.delete(entry)
-
-            #Insert new data sorted
-            for user in self.data["entries"]:
-                value = [val for val in user.values()]
-                self.tree_view.insert('', 'end', values=value)
+            #Update data and sort by date by default
+            self.handle_sort('date')
 
     def hide(self):
         #Destroy elements
@@ -105,6 +108,17 @@ class SummaryFrame(base_summary_frame.BaseSummaryFrame):
         else:
             self.sort_by = col
             self.sort_reverse = False
+
+        if(self.sort_by == 'date'):
+            #Sort the data by date
+            self.data["entries"].sort(key=lambda entry: datetime.strptime(entry['date'], "%a %b %d %H:%M:%S %Y"), reverse=self.sort_reverse)
+        else:
+            #Sort the data
+            self.data["entries"].sort(key=lambda entry: entry[self.sort_by], reverse=self.sort_reverse)
+
+        #Update tree view
+        self.update_tree_view()
+
         #Add text on sorted value
         if self.tree_view:
             if(self.sort_reverse):
