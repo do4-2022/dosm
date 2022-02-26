@@ -3,6 +3,7 @@ from logger.factory import LoggerFactory
 from logger.level import LogLevel
 
 
+# This class represent a Logger instance
 class Logger:
 
   @staticmethod
