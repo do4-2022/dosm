@@ -8,7 +8,7 @@ class TabFrame(base_frame.BaseFrame):
     def __init__(self, master, logger, **options):
         super().__init__(master, logger, **options)
         self.summary_frames = []
-        self.name = 'Accueil'
+        self.name = 'Home'
         
     def show(self):
         # grid

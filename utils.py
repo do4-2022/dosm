@@ -1,4 +1,6 @@
+import sys
 import threading
+
 
 def parallel_run(fct, callback, *args):
     """
@@ -14,3 +16,13 @@ def parallel_run(fct, callback, *args):
     thread.start()
 
     return thread
+
+
+def parse_int_sort(t):
+    """
+    Try to parse string stored as first item of `t` as an integer.
+    If this string does not represent an integer return float('inf').
+    """
+    if isinstance(t[0], str) and t[0].isdigit():
+        return int(t[0])
+    return float('inf')
