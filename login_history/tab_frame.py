@@ -108,8 +108,12 @@ class TabFrame(base_frame.BaseFrame):
             self.sort_by = col
             self.sort_reverse = False
 
-        #Sort the data
-        self.data["entries"].sort(key=lambda entry: entry[self.sort_by], reverse=self.sort_reverse)
+        if(self.sort_by == 'date'):
+            #Sort the data by date
+            self.data["entries"].sort(key=lambda entry: datetime.strptime(entry['date'], "%a %b %d %H:%M:%S %Y"), reverse=self.sort_reverse)
+        else:
+            #Sort the data
+            self.data["entries"].sort(key=lambda entry: entry[self.sort_by], reverse=self.sort_reverse)
 
         #Update tree view
         self.update_tree_view()
