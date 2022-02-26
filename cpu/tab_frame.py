@@ -19,7 +19,6 @@ class TabFrame (base_frame.BaseFrame):
         self.graphFrame = tk.Frame(self)
 
     def show(self):
-
         # data tree
         self.dataFrame = tk.Frame(self)
         self.dataFrame.pack(side=tk.LEFT, fill=tk.BOTH)
@@ -40,7 +39,6 @@ class TabFrame (base_frame.BaseFrame):
         self.dataFrame.destroy()
         self.graphFrame.destroy()
         super().hide()
-
         
     def update(self, dt):
         self.cpu.update()
@@ -48,9 +46,6 @@ class TabFrame (base_frame.BaseFrame):
         if self.shown:
             self.fillTreeView()
             self.cpuUsageGraph.redraw(self.cpu.usages)
-
-        
-
 
     def log(self):
         if len(self.cpu.usages) >= 2:
@@ -60,7 +55,6 @@ class TabFrame (base_frame.BaseFrame):
                 self.logger.write_log(f"CPU global usage exceded 50% ({self.cpu.usages[-1]}%)", level=LogLevel.INFO)
             elif self.cpu.usages[-1] < 75 and self.cpu.usages[-2] >= 75:
                 self.logger.write_log(f"CPU global usage has gone under 75% ({self.cpu.usages[-1]}%)", level=LogLevel.INFO)
-        
 
     def generateTreeView(self, master):
         columns = ('category', 'value')
@@ -79,7 +73,6 @@ class TabFrame (base_frame.BaseFrame):
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.dataTree.pack(side=tk.LEFT, fill=tk.Y, expand=True)
 
-
     def fillTreeView(self):
         # empty it
         for i in self.dataTree.get_children():
@@ -88,5 +81,3 @@ class TabFrame (base_frame.BaseFrame):
         # fill it
         for element in self.cpu.generateDataTuples():
             self.dataTree.insert('', tk.END, values=element)
-
-        

@@ -1,5 +1,7 @@
 import psutil as ps
 import tkinter as tk
+from tkinter import ttk
+
 from integrator import base_frame
 from logger.logger import Logger
 from datetime import datetime
@@ -9,7 +11,7 @@ class TabFrame(base_frame.BaseFrame):
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
         self.logger = logger
-        self.name = 'Utilisateurs connectés'
+        self.name = 'Logged users'
 
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
@@ -24,7 +26,7 @@ class TabFrame(base_frame.BaseFrame):
         }
 
         # Init datagrid
-        self.datagrid = tk.ttk.Treeview(
+        self.datagrid = ttk.Treeview(
             self, columns=list(columns.keys()), show='headings')
 
         # Set datagrid headings
@@ -34,8 +36,7 @@ class TabFrame(base_frame.BaseFrame):
         self.datagrid.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
         # Init scrollbar
-        self.scrollbar = tk.ttk.Scrollbar(
-            self, orient=tk.VERTICAL, command=self.datagrid.yview)
+        self.scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.datagrid.yview)
         self.datagrid.configure(yscroll=self.scrollbar.set)
         self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 

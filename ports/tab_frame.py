@@ -1,5 +1,4 @@
 import json
-import sys
 import tkinter as tk
 from tkinter import ttk
 
@@ -8,6 +7,7 @@ from logger.level import LogLevel
 from logger.logger import Logger
 
 from ports import read
+from utils import parse_int_sort
 
 COLUMNS = ("local port", "local addr", "remote addr", "remote port", "PID", "name", "status", "type")
 DATA_FIELDS = ("local_port", "local_addr", "remote_addr", "remote_port", "pid", "name", "status", "type")
@@ -101,14 +101,3 @@ class TabFrame(base_frame.BaseFrame):
         # rearrange items in sorted positions
         for index, (val, k) in enumerate(l):
             tv.move(k, '', index)
-
-
-# Return the parsed number, if the string is not a number, return the maximum integer value
-def parse_int_sort(t):
-    try:
-        if (t[0] != ""):
-            return int(t[0])
-        else:
-            return sys.maxsize
-    except:
-        return sys.maxsize

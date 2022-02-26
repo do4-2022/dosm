@@ -8,7 +8,7 @@ Currently integrated
 - [x] ipc
 - [x] last users
 - [x] logged users
-- [ ] memory
+- [x] memory
 - [x] network
 - [x] ports
 - [x] process
@@ -35,7 +35,7 @@ Then install requirements.
 
 ```bash
 cd dosm
-pythons3 -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 Finally run the project.
