@@ -18,10 +18,21 @@ class TabFrame(base_frame.BaseFrame):
         self.name = 'Login History'
         self.data = []
         self.sort_by = 'date'
-        self.sort_reverse = True
+        self.sort_reverse = False
         self.waiting_label = None
         self.tree_view = None
         self.scroll_bar = None
+
+    def update_tree_view(self):
+        if(self.tree_view):
+            #Delete previous data
+            for entry in self.tree_view.get_children():
+                self.tree_view.delete(entry)
+
+            #Insert new data sorted
+            for user in self.data["entries"]:
+                value = [val for val in user.values()]
+                self.tree_view.insert('', 'end', values=value)
 
     def show(self):
         #Create a waiting label
@@ -58,9 +69,6 @@ class TabFrame(base_frame.BaseFrame):
             for entry in TABLE_COLUMNS:
                 self.tree_view.heading(entry, text=entry, command=lambda col=entry: self.handle_sort(col))
 
-            #Handle sort for default value
-            self.handle_sort(self.sort_by)
-
             #Format date
             self.data = data
             for entry in self.data["entries"]:
@@ -69,17 +77,8 @@ class TabFrame(base_frame.BaseFrame):
             #Log the data
             self.logger.write_log(json.dumps(self.data) ,level=LogLevel.INFO)
 
-            #Sort the data
-            self.data["entries"].sort(key=lambda entry: entry[self.sort_by], reverse=self.sort_reverse)
-
-            #Delete previous data
-            for entry in self.tree_view.get_children():
-                self.tree_view.delete(entry)
-
-            #Insert new data sorted
-            for user in self.data["entries"]:
-                value = [val for val in user.values()]
-                self.tree_view.insert('', 'end', values=value)
+            #Update data and sort by date by default
+            self.handle_sort('date')
 
     def hide(self):
         #Destroy elements
@@ -108,6 +107,13 @@ class TabFrame(base_frame.BaseFrame):
         else:
             self.sort_by = col
             self.sort_reverse = False
+
+        #Sort the data
+        self.data["entries"].sort(key=lambda entry: entry[self.sort_by], reverse=self.sort_reverse)
+
+        #Update tree view
+        self.update_tree_view()
+
         #Add text on sorted value
         if self.tree_view:
             if(self.sort_reverse):
