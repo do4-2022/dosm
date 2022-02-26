@@ -1,5 +1,9 @@
+import json
+import os
 import tkinter as tk
 
+from os import path as op
+from pathlib import Path
 from PIL import Image, ImageTk
 from tkinter import ttk
 from time import time
@@ -58,9 +62,13 @@ class Integrator:
         for tab in self.tabs:
             self.notebook.add(tab, text=tab.name)
 
+        self.logger.write_log('Done')
+
         # Bind notebook tab changed event to select_tab method
         self.selected_tab = 0
-        self.notebook.bind('<<NotebookTabChanged>>', self.select_tab)
+        self.notebook.bind('<<NotebookTabChanged>>', self.on_select_tab)
+
+        self.load()
 
     def update(self, last_time: float):
         """ Update the integrator.
@@ -71,7 +79,7 @@ class Integrator:
             tab.update(new_time - last_time)
         self.window.after(UPDATE_INTERVAL, self.update, new_time)
 
-    def select_tab(self, event):
+    def on_select_tab(self, event):
         """ Hide current tab and show the selected one.
         
         `event` (VirtualEvent): A notebook virtual event. """
@@ -82,8 +90,57 @@ class Integrator:
         
         if not self.tabs[self.selected_tab].shown:
             self.tabs[self.selected_tab].show()
+
+        self.save()
+
+    def select_tab(self, tab_index):
+        """ Select a tab with a specific `tab_index` """
+        self.notebook.select(self.notebook.tabs()[tab_index])
     
     def run(self):
         """ Run the window mainloop. """
         self.window.after(UPDATE_INTERVAL, self.update, time())
         self.window.mainloop()
+
+    def save(self):
+        """ Save the integrator states. """
+        home_folder = Path.home()
+        conf_folder = home_folder / '.dosm'
+        
+        self.logger.write_log('Saving states...')
+
+        if not op.exists(conf_folder):
+            os.mkdir(conf_folder)
+
+        if not op.isdir(conf_folder):
+            msg = f'Unable to save states: "{conf_folder}" is not a folder'
+            self.logger.write_log(msg)
+            return
+        
+        with open(conf_folder / 'integrator_state.json', 'w') as file:
+            file.write(json.dumps({'selected_tab': self.selected_tab}))
+        
+        self.logger.write_log('Done')
+
+    def load(self):
+        """ Load the integrator states. """
+        home_folder = Path.home()
+        conf_file = home_folder / '.dosm' / 'integrator_state.json'
+        
+        self.logger.write_log('Loading states...')
+
+        if not op.exists(conf_file):
+            return 
+        
+        if not op.isfile(conf_file):
+            msg = f'Unable to load states: "{conf_file}" is not a file'
+            self.logger.write_log(msg)
+            return
+        
+        try:
+            with open(conf_file, 'r') as file:
+                self.select_tab(int(json.load(file).get('selected_tab', 0)))
+        except Exception as e:
+            self.logger.write_log('Unable to load "selected_tab" from states')
+        else:
+            self.logger.write_log('Done')
