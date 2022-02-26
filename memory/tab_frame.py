@@ -1,18 +1,16 @@
 
 import matplotlib
 matplotlib.use("TkAgg")
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,  NavigationToolbar2Tk) 
 from matplotlib.figure import Figure
-import matplotlib.animation as animation
 from matplotlib import style
-from pathlib import Path
 import psutil 
 import tkinter as tk
 from tkinter import *
 
 from integrator import base_frame
-from logger.level import LogLevel
 from logger.logger import Logger
+
+from .graph import Graph
 
 LARGE_FONT= ("Verdana", 12)
 style.use("ggplot")
@@ -75,13 +73,3 @@ class TabFrame (base_frame.BaseFrame):
             self.ramUsagePercent.config(text=(str(100-round((psutil.virtual_memory().available * 100 / psutil.virtual_memory().total),1))+'% used'))
             self.ramUsageGB.config(text=(str(round((psutil.virtual_memory().total-psutil.virtual_memory().available)/1000000000,1))+'GB/'+
             str(round((psutil.virtual_memory().total/1000000000),1))+"GB"))
-            
-class Graph(tk.Frame):
-
-    def __init__(self, parent, f):
-        tk.Frame.__init__(self, parent)
-        self.canvas = FigureCanvasTkAgg(f, parent)
-        self.canvas.draw()
-        self.canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
-        self.canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-        

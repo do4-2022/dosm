@@ -1,8 +1,8 @@
 import tkinter as tk
 from ipc import utils
-from home import tab_frame
+from home import base_summary_frame
 
-class SummaryFrame(tab_frame.BaseSummaryFrame):
+class SummaryFrame(base_summary_frame.BaseSummaryFrame):
     def __init__(self, master, logger, **options):
         utils.Utils.init_pipes()
         super().__init__(master, logger,)

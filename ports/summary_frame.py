@@ -18,7 +18,7 @@ class SummaryFrame(base_summary_frame.BaseSummaryFrame):
         self.portsLb.pack()
         self.listenLb.pack()
 
-    def update(self):
+    def update(self, dt):
         result = read.read_connexions()
         self.portsCount.set("Active ports : " + str(len(result)))
 

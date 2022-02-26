@@ -1,4 +1,5 @@
 import time
+from turtle import width
 
 from net import tab_frame
 import math
