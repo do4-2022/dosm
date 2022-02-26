@@ -1,5 +1,6 @@
-from datetime import datetime
 import json
+from home import base_summary_frame
+from datetime import datetime
 import tkinter as tk
 from tkinter import ttk
 
@@ -9,9 +10,9 @@ from logger.logger import Logger
 from login_history import extractor
 from utils import parallel_run
 
-TABLE_COLUMNS = ('user', 'tty', 'ip', 'date', 'state/loggedout', 'uptime')
+TABLE_COLUMNS = ('user', 'date')
 
-class TabFrame(base_frame.BaseFrame):
+class SummaryFrame(base_summary_frame.BaseSummaryFrame):
     def __init__(self, master, logger: Logger, **options):
         super().__init__(master, logger, **options)
 
