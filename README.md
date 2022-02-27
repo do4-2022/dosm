@@ -97,7 +97,7 @@ See conventionnals commits here : https://www.conventionalcommits.org/en/v1.0.0-
 
 One of us have implemented a Logger class to store debug messages.
 
-A new logger is created for each `TabFrame`. These one can use their logger with `self.write_log(message)`.
+A new logger is created for each `TabFrame`. These one can use their logger with `self.logger.write_log(message)`.
 
 ## Testing
 
