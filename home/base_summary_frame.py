@@ -23,4 +23,4 @@ class BaseSummaryFrame(tk.LabelFrame):
 class EmptySummaryFrame(BaseSummaryFrame):
   def __init__(self, master, logger, name, **options):
     super().__init__(master, logger, name, **options)
-    tk.Label(self, text="Not yet integrated").pack(fill="both")
+    tk.Label(self, text="Not yet integrated").pack(fill="both", expand=True)
