@@ -20,21 +20,19 @@ class TabFrame(base_frame.BaseFrame):
         self.logger = logger
         self.summary_frames = []
         self.name = 'Home'
+        self.grid_frame = Frame(self)
         
     def show(self):
-        # grid
-        grid_frame = Frame(self)
-
         self.summary_frames = [
-            ipc_frame.SummaryFrame(grid_frame, self.logger, 'IPC'),
-            cpu_frame.SummaryFrame(grid_frame, self.logger, 'CPU'),
-            cu_frame.SummaryFrame(grid_frame, self.logger, 'CU'),
-            net_frame.SummaryFrame(grid_frame, self.logger, 'NET'),
-            ports_frame.SummaryFrame(grid_frame, self.logger, 'PORTS'),
-            login_history_frame.SummaryFrame(grid_frame, self.logger, 'LOGIN_HISTORY'),
-            process_frame.SummaryFrame(grid_frame, self.logger, 'PROCESS'),
-            base_summary_frame.EmptySummaryFrame(grid_frame, self.logger, 'MEMORY'),
-            base_summary_frame.EmptySummaryFrame(grid_frame, self.logger, 'DISK'),
+            ipc_frame.SummaryFrame(self.grid_frame, self.logger, 'IPC'),
+            cpu_frame.SummaryFrame(self.grid_frame, self.logger, 'CPU'),
+            cu_frame.SummaryFrame(self.grid_frame, self.logger, 'CU'),
+            net_frame.SummaryFrame(self.grid_frame, self.logger, 'NET'),
+            ports_frame.SummaryFrame(self.grid_frame, self.logger, 'PORTS'),
+            login_history_frame.SummaryFrame(self.grid_frame, self.logger, 'LOGIN_HISTORY'),
+            process_frame.SummaryFrame(self.grid_frame, self.logger, 'PROCESS'),
+            base_summary_frame.EmptySummaryFrame(self.grid_frame, self.logger, 'MEMORY'),
+            base_summary_frame.EmptySummaryFrame(self.grid_frame, self.logger, 'DISK'),
         ]
         
         for summary_frame in self.summary_frames:
@@ -44,12 +42,12 @@ class TabFrame(base_frame.BaseFrame):
         index = 0
         for r in range(3):
             for c in range(3):
-                self.summary_frames[index].grid(row=r, column=c, padx=5, pady=5, sticky="nsew")
+                self.summary_frames[index].grid(row=r, column=c, padx=10, pady=10, sticky="nsew")
                 index += 1
-                grid_frame.grid_rowconfigure(r, weight=1)
-                grid_frame.grid_columnconfigure(c, weight=1)
+                self.grid_frame.grid_rowconfigure(r, weight=1)
+                self.grid_frame.grid_columnconfigure(c, weight=1)
 
-        grid_frame.pack(fill="both", expand=True)
+        self.grid_frame.pack(fill="both", expand=True)
 
     def update(self, dt):
         for summary_frame in self.summary_frames:
@@ -58,3 +56,4 @@ class TabFrame(base_frame.BaseFrame):
     def hide(self):
         for summary_frame in self.summary_frames:
             summary_frame.hide()
+        self.grid_frame.destroy()

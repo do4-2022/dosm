@@ -5,7 +5,7 @@ from integrator import base_frame
 
 class BaseSummaryFrame(tk.LabelFrame):
   def __init__(self, master, logger, name, **options):
-    super().__init__(master, width=300, height=250, text=name, **options)
+    super().__init__(master, width=400, height=350, text=name, **options)
     
     self.logger = logger
     self.shown = False
@@ -23,4 +23,4 @@ class BaseSummaryFrame(tk.LabelFrame):
 class EmptySummaryFrame(BaseSummaryFrame):
   def __init__(self, master, logger, name, **options):
     super().__init__(master, logger, name, **options)
-    tk.Label(self, text="Not yet integrated").pack(fill="both", expand=True)
+    tk.Label(self, text="Not yet integrated").pack(fill="both")
