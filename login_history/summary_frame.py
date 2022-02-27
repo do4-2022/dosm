@@ -32,7 +32,7 @@ class SummaryFrame(base_summary_frame.BaseSummaryFrame):
 
             #Insert new data sorted
             for user in self.data["entries"]:
-                value = [val for val in user.values()]
+                value = [val for index, val in enumerate(user.values()) if index in (0, 3)]
                 self.tree_view.insert('', 'end', values=value)
 
     def show(self):
