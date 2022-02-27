@@ -1,6 +1,20 @@
+import tkinter as tk
+
 from integrator import base_frame
 
 
-class BaseSummaryFrame(base_frame.BaseFrame):
-    def __init__(self, master, logger, **options):
-      super().__init__(master, logger, width=300, height=250, borderwidth=10, highlightbackground="#5D55C1", highlightthickness=1, **options)
+class BaseSummaryFrame(tk.LabelFrame):
+  def __init__(self, master, logger, name, **options):
+    super().__init__(master, width=300, height=250, text=name, **options)
+    
+    self.logger = logger
+    self.shown = False
+
+  def show(self):
+    base_frame.BaseFrame.show(self)
+
+  def update(self, dt):
+    base_frame.BaseFrame.update(self, dt)
+
+  def hide(self):
+    base_frame.BaseFrame.hide(self)

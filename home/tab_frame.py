@@ -1,4 +1,5 @@
 from tkinter import Frame
+from utils import parallel_run
 from integrator import base_frame
 from home import base_summary_frame
 from config import NB_OF_MINI_FRAME
@@ -17,29 +18,26 @@ class TabFrame(base_frame.BaseFrame):
         super().__init__(master, logger, **options)
         self.logger = logger
         self.summary_frames = []
-        for i in range(NB_OF_MINI_FRAME + 1):
-            self.summary_frames.append(None)
         self.name = 'Home'
         
     def show(self):
         # grid
         grid_frame = Frame(self)
 
-        self.summary_frames[0] = ipc_frame.SummaryFrame(grid_frame, self.logger)
-        # self.summary_frames.append(memory_frame.SummaryFrame(grid_frame, self.logger))
-        self.summary_frames[1] = cpu_frame.SummaryFrame(grid_frame, self.logger)
-        self.summary_frames[2] = cu_frame.SummaryFrame(grid_frame, self.logger)
-        self.summary_frames[3] = net_frame.SummaryFrame(grid_frame, self.logger)
-        self.summary_frames[4] = ports_frame.SummaryFrame(grid_frame, self.logger)
-
-        # init summary frames
-        for i in range(NB_OF_MINI_FRAME + 1):
-            if i > 4:
-                summary_frame = base_summary_frame.BaseSummaryFrame(grid_frame, self.logger)
-                self.summary_frames[i] = summary_frame
-            else:
-                self.summary_frames[i].show()
+        self.summary_frames = [
+            ipc_frame.SummaryFrame(grid_frame, self.logger, 'IPC'),
+            cpu_frame.SummaryFrame(grid_frame, self.logger, 'CPU'),
+            cu_frame.SummaryFrame(grid_frame, self.logger, 'CU'),
+            net_frame.SummaryFrame(grid_frame, self.logger, 'NET'),
+            ports_frame.SummaryFrame(grid_frame, self.logger, 'PORTS'),
+            base_summary_frame.BaseSummaryFrame(grid_frame, self.logger, 'MEMORY'),
+            base_summary_frame.BaseSummaryFrame(grid_frame, self.logger, 'PROCESS'),
+            base_summary_frame.BaseSummaryFrame(grid_frame, self.logger, 'LOGIN_HISTORY'),
+            base_summary_frame.BaseSummaryFrame(grid_frame, self.logger, 'DISK'),
+        ]
         
+        for summary_frame in self.summary_frames:
+            parallel_run(summary_frame.show, lambda x: None)
 
         # fill the grid
         index = 0
