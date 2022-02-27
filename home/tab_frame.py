@@ -32,9 +32,9 @@ class TabFrame(base_frame.BaseFrame):
             net_frame.SummaryFrame(grid_frame, self.logger, 'NET'),
             ports_frame.SummaryFrame(grid_frame, self.logger, 'PORTS'),
             login_history_frame.SummaryFrame(grid_frame, self.logger, 'LOGIN_HISTORY'),
-            base_summary_frame.BaseSummaryFrame(grid_frame, self.logger, 'MEMORY'),
-            base_summary_frame.BaseSummaryFrame(grid_frame, self.logger, 'PROCESS'),
-            base_summary_frame.BaseSummaryFrame(grid_frame, self.logger, 'DISK'),
+            base_summary_frame.EmptySummaryFrame(grid_frame, self.logger, 'MEMORY'),
+            base_summary_frame.EmptySummaryFrame(grid_frame, self.logger, 'PROCESS'),
+            base_summary_frame.EmptySummaryFrame(grid_frame, self.logger, 'DISK'),
         ]
         
         for summary_frame in self.summary_frames:

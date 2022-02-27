@@ -18,3 +18,9 @@ class BaseSummaryFrame(tk.LabelFrame):
 
   def hide(self):
     base_frame.BaseFrame.hide(self)
+
+
+class EmptySummaryFrame(BaseSummaryFrame):
+  def __init__(self, master, logger, name, **options):
+    super().__init__(master, logger, name, **options)
+    tk.Label(self, text="Not yet integrated").pack(fill="both", expand=True)
