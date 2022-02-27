@@ -8,7 +8,7 @@ from connected_users import summary_frame as cu_frame
 from cpu import summary_frame as cpu_frame
 from ipc import summary_frame as ipc_frame
 from login_history import summary_frame as login_history_frame
-# from memory import summary_frame as memory_frame
+from memory import summary_frame as memory_frame
 from net import summary_frame as net_frame
 from ports import summary_frame as ports_frame
 from process import summary_frame as process_frame
@@ -31,7 +31,7 @@ class TabFrame(base_frame.BaseFrame):
             ports_frame.SummaryFrame(self.grid_frame, self.logger, 'PORTS'),
             login_history_frame.SummaryFrame(self.grid_frame, self.logger, 'LOGIN_HISTORY'),
             process_frame.SummaryFrame(self.grid_frame, self.logger, 'PROCESS'),
-            base_summary_frame.EmptySummaryFrame(self.grid_frame, self.logger, 'MEMORY'),
+            memory_frame.SummaryFrame(self.grid_frame, self.logger, 'MEMORY'),
             base_summary_frame.EmptySummaryFrame(self.grid_frame, self.logger, 'DISK'),
         ]
         
