@@ -7,6 +7,7 @@ from config import NB_OF_MINI_FRAME
 from connected_users import summary_frame as cu_frame
 from cpu import summary_frame as cpu_frame
 from ipc import summary_frame as ipc_frame
+from login_history import summary_frame as login_history_frame
 # from memory import summary_frame as memory_frame
 from net import summary_frame as net_frame
 from ports import summary_frame as ports_frame
@@ -30,9 +31,9 @@ class TabFrame(base_frame.BaseFrame):
             cu_frame.SummaryFrame(grid_frame, self.logger, 'CU'),
             net_frame.SummaryFrame(grid_frame, self.logger, 'NET'),
             ports_frame.SummaryFrame(grid_frame, self.logger, 'PORTS'),
+            login_history_frame.SummaryFrame(grid_frame, self.logger, 'LOGIN_HISTORY'),
             base_summary_frame.BaseSummaryFrame(grid_frame, self.logger, 'MEMORY'),
             base_summary_frame.BaseSummaryFrame(grid_frame, self.logger, 'PROCESS'),
-            base_summary_frame.BaseSummaryFrame(grid_frame, self.logger, 'LOGIN_HISTORY'),
             base_summary_frame.BaseSummaryFrame(grid_frame, self.logger, 'DISK'),
         ]
         
