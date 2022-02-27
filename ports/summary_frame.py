@@ -7,8 +7,8 @@ from ports import read
 
 
 class SummaryFrame(base_summary_frame.BaseSummaryFrame):
-    def __init__(self, master, logger, **options):
-        super().__init__(master, logger, **options)
+    def __init__(self, master, logger, name, **options):
+        super().__init__(master, logger, name, **options)
         self.portsCount = StringVar()
         self.listenCount = StringVar()
 
@@ -18,7 +18,7 @@ class SummaryFrame(base_summary_frame.BaseSummaryFrame):
         self.portsLb.pack()
         self.listenLb.pack()
 
-    def update(self):
+    def update(self, dt):
         result = read.read_connexions()
         self.portsCount.set("Active ports : " + str(len(result)))
 

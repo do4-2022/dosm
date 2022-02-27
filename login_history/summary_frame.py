@@ -13,10 +13,9 @@ from utils import parallel_run
 TABLE_COLUMNS = ('user', 'date')
 
 class SummaryFrame(base_summary_frame.BaseSummaryFrame):
-    def __init__(self, master, logger: Logger, **options):
-        super().__init__(master, logger, **options)
+    def __init__(self, master, logger: Logger, name, **options):
+        super().__init__(master, logger, name, **options)
 
-        self.name = 'Login History'
         self.data = []
         self.sort_by = 'date'
         self.sort_reverse = False

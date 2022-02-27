@@ -11,7 +11,7 @@ import math
 
 class TabFrame(DOSMFrame.BaseFrame):
     def __init__(self, master, logger, **options):
-        super().__init__(master, logger, **options)
+        DOSMFrame.BaseFrame.__init__(self, master, logger, **options)
 
         self.name = 'Network'
 
