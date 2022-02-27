@@ -11,7 +11,7 @@ from login_history import summary_frame as login_history_frame
 # from memory import summary_frame as memory_frame
 from net import summary_frame as net_frame
 from ports import summary_frame as ports_frame
-# from process import summary_frame as process_frame
+from process import summary_frame as process_frame
 
 
 class TabFrame(base_frame.BaseFrame):
@@ -32,8 +32,8 @@ class TabFrame(base_frame.BaseFrame):
             net_frame.SummaryFrame(grid_frame, self.logger, 'NET'),
             ports_frame.SummaryFrame(grid_frame, self.logger, 'PORTS'),
             login_history_frame.SummaryFrame(grid_frame, self.logger, 'LOGIN_HISTORY'),
+            process_frame.SummaryFrame(grid_frame, self.logger, 'PROCESS'),
             base_summary_frame.EmptySummaryFrame(grid_frame, self.logger, 'MEMORY'),
-            base_summary_frame.EmptySummaryFrame(grid_frame, self.logger, 'PROCESS'),
             base_summary_frame.EmptySummaryFrame(grid_frame, self.logger, 'DISK'),
         ]
         
