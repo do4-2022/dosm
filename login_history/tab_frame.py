@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 import tkinter as tk
 from tkinter import ttk
+import platform
 
 from integrator import base_frame
 from logger.level import LogLevel
@@ -9,7 +10,11 @@ from logger.logger import Logger
 from login_history import extractor
 from utils import parallel_run
 
-TABLE_COLUMNS = ('user', 'tty', 'ip', 'date', 'state/loggedout', 'uptime')
+match platform.system():
+    case "Linux":
+        TABLE_COLUMNS = ('user', 'tty', 'ip', 'date', 'state/loggedout', 'uptime')
+    case "Darwin":
+        TABLE_COLUMNS = ('user', 'tty', 'date', 'uptime')
 
 class TabFrame(base_frame.BaseFrame):
     def __init__(self, master, logger: Logger, **options):
