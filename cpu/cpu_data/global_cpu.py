@@ -16,7 +16,7 @@ class GlobalCPU ():
         self.cpu_list = []
 
         freq_per_cpu = psutil.cpu_freq(percpu=True)
-        for i in range(0,self.number_of_logical_cpus):
+        for i in range(0,len(freq_per_cpu)):
             self.cpu_list.append(CPU(freq_per_cpu[i].min, freq_per_cpu[i].max))
 
         self.loads = []
