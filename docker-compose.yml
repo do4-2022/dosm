@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  dosm:
+    build:
+      context: .
+      network: host
+    image: dosm
+    command: bash
+    environment:
+      - DISPLAY
+    volumes:
+      - /tmp/.X11-unix
