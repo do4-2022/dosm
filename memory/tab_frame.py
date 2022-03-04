@@ -1,0 +1,75 @@
+
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.figure import Figure
+from matplotlib import style
+import psutil 
+import tkinter as tk
+from tkinter import *
+
+from integrator import base_frame
+from logger.logger import Logger
+
+from .graph import Graph
+
+LARGE_FONT= ("Verdana", 12)
+style.use("ggplot")
+
+class TabFrame (base_frame.BaseFrame):
+
+    def __init__(self, master, logger: Logger, **options):
+        super().__init__(master, logger, **options)
+        self.ramUsageGraph = None
+        self.ramUsagePercent = None
+        self.ramUsageGB = None
+        self.totalRam = None
+        self.graphFrame = None
+        self.frame = None
+        self.figure = Figure(figsize=(5,1), dpi=100)
+        self.subplot = self.figure.add_subplot(111)
+        self.xList = [0]
+        self.yList = [100-psutil.virtual_memory().available * 100 / psutil.virtual_memory().total]
+        self.name = "Memory" 
+
+    def show(self):
+
+        self.frame = tk.Frame(self)
+        self.frame.pack(side="top", fill="both", expand = True)
+        self.totalRam = tk.Label(self.frame, text="Total available : "+str(round((psutil.virtual_memory().total/1000000000),1))+"GB", font=LARGE_FONT)
+        self.totalRam.pack(pady=10,padx=10)
+        self.frame.grid_rowconfigure(0, weight=1)
+        self.frame.grid_columnconfigure(0, weight=1)
+        
+        self.graphFrame = Graph(self.frame, self.figure)
+        self.graphFrame.tkraise()    
+
+        
+        self.ramUsagePercent = tk.Label(self, text="Used %", font=LARGE_FONT)
+        self.ramUsagePercent.pack(pady=10,padx=10)
+
+        self.ramUsageGB = tk.Label(self, text="Used GB", font=LARGE_FONT)
+        self.ramUsageGB.pack(pady=10,padx=10)
+        super().show()
+
+    def hide(self):
+        self.totalRam.destroy()
+        self.ramUsageGB.destroy()
+        self.ramUsagePercent.destroy()
+        self.frame.destroy()
+        super().hide()
+
+        
+    def update(self, dt):
+        if self.shown:
+            self.yList.append(100-round(psutil.virtual_memory().available * 100 / psutil.virtual_memory().total))
+            self.xList.append(self.xList[len(self.xList)-1]+1)
+            self.xList= self.xList[-50:]
+            self.yList= self.yList[-50:]
+            self.subplot.clear()
+            self.subplot.get_xaxis().set_visible(False)
+            self.subplot.set_ylim([0, 100])
+            self.subplot.plot(self.xList, self.yList)
+            self.graphFrame.canvas.draw()
+            self.ramUsagePercent.config(text=(str(100-round((psutil.virtual_memory().available * 100 / psutil.virtual_memory().total),1))+'% used'))
+            self.ramUsageGB.config(text=(str(round((psutil.virtual_memory().total-psutil.virtual_memory().available)/1000000000,1))+'GB/'+
+            str(round((psutil.virtual_memory().total/1000000000),1))+"GB"))

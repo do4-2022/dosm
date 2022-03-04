@@ -16,6 +16,26 @@ $ python cli/main.py show-files .
 
 ## Commands
 
+### get
+
+This command show all the logs with the given level and the timestamp.
+
+| Argument name | Argument type |  Argument default |  Argument description |
+|-|-|-|-|
+| path | String | `null` | Path to the root folder of dosm |
+| start | DateTime | `null` | Start date of the logs |
+| end | DateTime | `null` | End date of the logs |
+
+| Option name | Option type |  Option default |  Option description |
+|-|-|-|-|
+| --level | String | `ALL` | Level of the logs to be displayed |
+
+Example :
+
+```python
+python cli/main.py get . "2022-02-11" "2022-02-13" --level ERROR
+```
+
 ### show-files
 
 This command show all the logs files.

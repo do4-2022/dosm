@@ -2,13 +2,13 @@
 from tkinter import StringVar
 from tkinter import ttk
 
-from home import mini_frame
+from home import base_summary_frame
 from ports import read
 
 
-class MiniFrame(mini_frame.MiniFrame):
-    def __init__(self, master, logger, **options):
-        super().__init__(master, logger, **options)
+class SummaryFrame(base_summary_frame.BaseSummaryFrame):
+    def __init__(self, master, logger, name, **options):
+        super().__init__(master, logger, name, **options)
         self.portsCount = StringVar()
         self.listenCount = StringVar()
 
@@ -18,7 +18,7 @@ class MiniFrame(mini_frame.MiniFrame):
         self.portsLb.pack()
         self.listenLb.pack()
 
-    def update(self):
+    def update(self, dt):
         result = read.read_connexions()
         self.portsCount.set("Active ports : " + str(len(result)))
 
